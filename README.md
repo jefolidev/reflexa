@@ -1,50 +1,62 @@
-# React + TypeScript + Vite
+# 🎭 **Reflexa**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **Reflexa** é uma aplicação em que você pode acompanhar estatística de como você vem se sentindo e fazer anotações de metas para cumprí-las ao decorrer da semana, no final, você ainda consegue ter uma análise de como foi a semana e quantas tasks cumpriu.
 
-Currently, two official plugins are available:
+## 🔗 **Índice**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [🚀 Tecnologias Utilizadas](-🚀-tecnologias-utlizadas)
+  - [💻 Front End](-💻-front-end)
+  - [💾 Back End](-💾-back-end)
+- [🚧 Atualizações Futuras](-🚧-atualizações-futuras)
 
-## Expanding the ESLint configuration
+## 🚀 Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### **💻 Front End**
 
-- Configure the top-level `parserOptions` property like this:
+- **Javascript / Typescrit** - Utilizado para tipagem estática e outras funcionalidades.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Tailwind** - Framework CSS utilitário que permite a criação de designs responsivos de forma rápida e flexível, usando classes predefinidas para estilizar os componentes.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **React** - Utilizada para construir interfaces de usuário. Utilizada no projeto para criar componentes reutilizáveis e dinâmicos, facilitando o desenvolvimento e manutenção da UI.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+  - 📚 **Bibliotecas**
+    - React Router - Biblioteca de roteamento para React. Utilizada para gerenciar a navegação entre diferentes páginas ou componentes em aplicações single-page (SPA).
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### **💾 Back End**
+
+- O back-end do projeto ainda será implementado. A intenção é utilizar **Express** para criar uma API que irá gerenciar as requisições e interação com o banco de dados. A implementação está planejada para uma atualização futura.
+
+## 📷 UI
+
+<strong>Dashboard</strong>
+
+<div align='center'>
+<img src="public/dashboard.png" width="45%">
+<img src="public/dashboard-2.png" width="45%">
+</div>
+
+<strong>Tasks</strong>
+
+<div align='center'>
+<img src="public/task.png" width="90%">
+</div>
+
+## 🚧 Atualizações Futuras
+
+Este projeto ainda está em desenvolvimento e contará com as seguintes melhorias em breve:
+
+- Implementação do Back End: Criar uma API para gerencimanto de novos objetivos;
+- Integração com **Docker** e uma **ORM**.
+
+## 👥 Fale comigo!
+
+Achou meu repertório interessante e gostaria de contratar um freela ou talvez me contratar para tornar acrescenter no seu negócio? Entre em contato comigo e vamos marcar.
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/jeferson-franco-1349062b0/">
+    <img src="https://skillicons.dev/icons?i=linkedin" />
+  </a>
+  <a href="https://github.com/jefolidev">
+    <img src="https://skillicons.dev/icons?i=github" />
+  </a>
+</p>
