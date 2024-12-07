@@ -4,10 +4,10 @@ O **Reflexa** é uma aplicação em que você pode acompanhar estatística de co
 
 ## 🔗 **Índice**
 
-- [🚀 Tecnologias Utilizadas](-🚀-tecnologias-utlizadas)
-  - [💻 Front End](-💻-front-end)
-  - [💾 Back End](-💾-back-end)
-- [🚧 Atualizações Futuras](-🚧-atualizações-futuras)
+- [🚀 Tecnologias Utilizadas](#-tecnologias-utlizadas)
+  - [💻 Front End](#-front-end)
+  - [💾 Back End](#-back-end)
+- [🚧 Atualizações Futuras](#-atualizações-futuras)
 
 ## 🚀 Tecnologias Utilizadas
 
