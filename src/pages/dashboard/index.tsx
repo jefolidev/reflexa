@@ -1,17 +1,17 @@
-import turnArrowIcon from '../../assets/arrow-cycle.svg'
-import arrowLeft from '../../assets/arrow-left.svg'
-import arrowRight from '../../assets/arrow-right.svg'
-import check from '../../assets/check.svg'
 import checkDefaultEmoji from '../../assets/checklist/check-default.svg'
-import happy from '../../assets/emotions/happy-emotion.svg'
-import pencilEmoji from '../../assets/pencil-emoji.png'
-import plus from '../../assets/plus.svg'
+import happy from '../../assets/emojis-card/happy-emotion.svg'
+import turnArrowIcon from '../../assets/misc/arrow-cycle.svg'
+import arrowLeft from '../../assets/misc/arrow-left.svg'
+import arrowRight from '../../assets/misc/arrow-right.svg'
+import check from '../../assets/misc/check.svg'
+import pencilEmoji from '../../assets/misc/pencil-emoji.png'
+import plus from '../../assets/misc/plus.svg'
 
 export function DashboardPage() {
   return (
     <div className=" bg-zinc-800 w-screen h-screen flex-col p-12 ">
       <header className="mb-4">
-        <span className="text-stone-500 font-poppins">Dashboard</span>
+        <span className="text-stone-500 font-poppins text-sm">Dashboard</span>
       </header>
       <div className="flex flex-col gap-6">
         <header className="flex justify-between items-center">
