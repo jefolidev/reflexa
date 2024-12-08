@@ -118,7 +118,8 @@ export function DashboardPage() {
                       5
                     </span>
                   </div>
-                </div>s
+                </div>
+                s
               </div>
               <div className=" h-full  bg-stone-900 flex flex-col justify-between items-enter rounded-2xl px-6 py-8">
                 <header>
