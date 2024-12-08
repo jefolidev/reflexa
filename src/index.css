@@ -24,6 +24,7 @@ h3 {
 
 button[type='button'] {
   background-color: white;
+  background-color: white;
   border-radius: 99999px;
   color: #0d0d0d;
   margin: 0 auto;
@@ -33,6 +34,12 @@ button[type='button'] {
   justify-content: center;
   align-items: center;
 
-  min-width:  1rem;
-  min-height: 1rem ;
+  min-width: 1rem;
+  min-height: 1rem;
+}
+
+.noStyleButton {
+  background-color: transparent !important;
+  margin: 0 0 !important;
+  padding: 0 !important;
 }
