@@ -33,6 +33,16 @@ button[type='button'] {
   justify-content: center;
   align-items: center;
 
-  min-width:  1rem;
-  min-height: 1rem ;
+  min-width: 1rem;
+  min-height: 1rem;
+
+  &:hover {
+    background-color: rgb(229, 229, 229);
+  }
+}
+
+.noStyleButton {
+  background-color: transparent !important;
+  margin: 0 0 !important;
+  padding: 0 !important;
 }
