@@ -1,4 +1,5 @@
-import { TaskCard } from './components/task-card'
+import { TaskCard } from './components/task-card/@index'
+import { TaskPriority } from './components/task-card/priority'
 
 export function PendingTasksPage() {
   return (
@@ -15,11 +16,13 @@ export function PendingTasksPage() {
           <span className="font-monts font-sm text-white ">50%</span>
         </div>
       </header>
-      <main className='flex flex-col gap-4'>
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
+      <main className="flex flex-col gap-4">
+        <TaskCard.Root>
+          <TaskCard.Header taskName="Organizar a casa" taskTag="Pessoal" />
+          <TaskCard.Hours />
+          <TaskPriority priorityLevel={2} />
+          <TaskCard.Action />
+        </TaskCard.Root>
       </main>
     </div>
   )
