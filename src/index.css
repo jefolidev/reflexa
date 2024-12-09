@@ -4,7 +4,8 @@
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-weight: 700;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -20,6 +21,10 @@ h2 {
 
 h3 {
   font-size: 1rem;
+}
+
+h4 {
+  font-size: 0.925rem;
 }
 
 button[type='button'] {
