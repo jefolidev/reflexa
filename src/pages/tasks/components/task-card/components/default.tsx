@@ -1,17 +1,29 @@
 import { useState } from 'react'
-import checkIcon from '../../../assets/check-default.svg'
+import uncheckedIcon from '../../../assets/check-default.svg'
+import checkedIcon from '../../../assets/checked.svg'
 import editIcon from '../../../assets/edit.svg'
 import deleteIcon from '../../../assets/trash.svg'
 import { ToolTip } from './tooltip'
 
 export function DefaultTag() {
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
+  const [isButtonActive, setIsButtonActive] = useState<boolean>(false)
+  const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
   function setToolTipVisible(buttonId: string) {
     setActiveToolTip(buttonId)
   }
+
   function setToolTipInvisible() {
     setActiveToolTip(null)
+  }
+
+  function clickButtonHandler() {
+    setIsButtonActive((prevButtonState) => !prevButtonState)
+  }
+
+  function hoverButtonHandler() {
+    setButtonHovered((prevButtonState) => !prevButtonState)
   }
 
   return (
@@ -20,7 +32,7 @@ export function DefaultTag() {
 
       <button
         type="button"
-        className="noStyleButton "
+        className="noStyleButton hover:brightness-[0.75]"
         onMouseEnter={() => setToolTipVisible('delete')}
         onMouseLeave={setToolTipInvisible}
         onFocus={() => {}}
@@ -31,7 +43,7 @@ export function DefaultTag() {
       <ToolTip text="Editar" isVisible={activeToolTip === 'edit'} />
       <button
         type="button"
-        className="noStyleButton "
+        className="noStyleButton hover:brightness-[0.75]"
         onMouseEnter={() => setToolTipVisible('edit')}
         onMouseLeave={setToolTipInvisible}
         onFocus={() => {}}
@@ -39,8 +51,22 @@ export function DefaultTag() {
         <img src={editIcon} alt="" />
       </button>
 
-      <button type="button" className="noStyleButton ">
-        <img src={checkIcon} alt="" />
+      <button
+        type="button"
+        className="noStyleButton"
+        onClick={clickButtonHandler}
+        onMouseEnter={hoverButtonHandler}
+        onMouseLeave={hoverButtonHandler}
+      >
+        {isButtonHovered ? (
+          <img src={checkedIcon} alt="" className="w-6 opacity-75" />
+        ) : (
+          <img
+            src={isButtonActive ? uncheckedIcon : checkedIcon}
+            alt=""
+            className="w-6"
+          />
+        )}
       </button>
     </div>
   )
