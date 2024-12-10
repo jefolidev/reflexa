@@ -62,7 +62,7 @@ export function DefaultTag() {
           <img src={checkedIcon} alt="" className="w-6 opacity-75" />
         ) : (
           <img
-            src={isButtonActive ? uncheckedIcon : checkedIcon}
+            src={isButtonActive ? checkedIcon : uncheckedIcon}
             alt=""
             className="w-6"
           />

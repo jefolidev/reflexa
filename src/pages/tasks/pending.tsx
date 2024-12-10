@@ -23,6 +23,18 @@ export function PendingTasksPage() {
           <TaskPriority priorityLevel={5} />
           <TaskCard.Action />
         </TaskCard.Root>
+        <TaskCard.Root>
+          <TaskCard.Header taskName="Estudar Node" taskTag="Pessoal" />
+          <TaskCard.Hours />
+          <TaskPriority priorityLevel={5} />
+          <TaskCard.Action />
+        </TaskCard.Root>
+        <TaskCard.Root>
+          <TaskCard.Header taskName="Estudar para biologia" taskTag="Pessoal" />
+          <TaskCard.Hours />
+          <TaskPriority priorityLevel={5} />
+          <TaskCard.Action />
+        </TaskCard.Root>
       </main>
     </div>
   )
