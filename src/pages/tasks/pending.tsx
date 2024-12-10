@@ -20,7 +20,7 @@ export function PendingTasksPage() {
         <TaskCard.Root>
           <TaskCard.Header taskName="Organizar a casa" taskTag="Pessoal" />
           <TaskCard.Hours />
-          <TaskPriority priorityLevel={2} />
+          <TaskPriority priorityLevel={5} />
           <TaskCard.Action />
         </TaskCard.Root>
       </main>
