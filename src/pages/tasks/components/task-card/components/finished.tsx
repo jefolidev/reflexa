@@ -1,4 +1,4 @@
-import finishedIcon from '../../tags/finished.svg'
+import finishedIcon from '../../assets/tags/finished.svg'
 
 export function FinishedTag() {
   return (

@@ -4,7 +4,7 @@ import { TaskPriority } from './components/task-card/priority'
 export function PendingTasksPage() {
   return (
     <div>
-      <header className="my-8">
+      <header className="my-6">
         <h2>
           Você tem 8 tasks de nível <strong>5</strong> para completar.
         </h2>
@@ -16,7 +16,7 @@ export function PendingTasksPage() {
           <span className="font-monts font-sm text-white ">50%</span>
         </div>
       </header>
-      <main className="flex flex-col gap-4">
+      <main className="flex flex-col gap-3">
         <TaskCard.Root>
           <TaskCard.Header taskName="Organizar a casa" taskTag="Pessoal" />
           <TaskCard.Hours />

@@ -1,25 +1,32 @@
-import { useState } from 'react'
+import { TaskCard } from './components/task-card/@index'
+import { WeeklyWrapperCard } from './components/wrapper-card'
 
 export function UncompletedTasksPage() {
-  const [number, setNumber] = useState(0)
-
-  function increaseNumberValue() {
-    setNumber((prevState) => prevState + 1)
-  }
-
-  const decreaseNumberValue = () => {
-    number === 0 ? setNumber(0) : setNumber((prevState) => prevState - 1)
-  }
   return (
-    <div className="">
-      <h1>Incompletos</h1>
-      <button type="button" onClick={increaseNumberValue}>
-        +
-      </button>
-      <span className="text-7xl">{number}</span>
-      <button type="button" onClick={decreaseNumberValue}>
-        -
-      </button>
+    <div className="flex flex-col gap-4 py-6">
+      <header>
+        <h2>Você deixou 8 tarefas pendentes ao decorrer dessa semana</h2>
+      </header>
+      <WeeklyWrapperCard hasStatus completedTasks={5} uncompletedTasks={2}>
+        <TaskCard.Root>
+          <TaskCard.Header
+            taskName="Levar o cachorro pro médico"
+            taskTag="Pessoal"
+          />
+          <TaskCard.Hours />
+          <TaskCard.Priority priorityLevel={5} />
+          <TaskCard.Action status="unfinished" />
+        </TaskCard.Root>
+        <TaskCard.Root>
+          <TaskCard.Header
+            taskName="Levar o cachorro pro médico"
+            taskTag="Pessoal"
+          />
+          <TaskCard.Hours />
+          <TaskCard.Priority priorityLevel={5} />
+          <TaskCard.Action status="unfinished" />
+        </TaskCard.Root>
+      </WeeklyWrapperCard>
     </div>
   )
 }
