@@ -5,8 +5,8 @@ import pendingIcon from '../assets/navbar-icons/sandtime.svg'
 import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
 
 /* 
-  TODO - 
-    ! - 1. Adicionar o nome da rota atual no header 'Dashboard / Objetivos / 'nome_da_rota'
+    TODO - 
+        1. Adicionar o nome da rota atual no header 'Dashboard / Objetivos / 'nome_da_rota'
 */
 
 const activeTabStyle = 'border-b-2 border-white '
