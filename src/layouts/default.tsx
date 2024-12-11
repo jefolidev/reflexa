@@ -66,7 +66,6 @@ export function DefaultLayout() {
           </main>
         </div>
       </aside>
-
       <Outlet />
     </div>
   )

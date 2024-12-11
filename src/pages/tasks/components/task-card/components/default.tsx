@@ -6,8 +6,8 @@ import deleteIcon from '../../../assets/trash.svg'
 import { ToolTip } from './tooltip'
 
 export function DefaultTag() {
-  const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false)
+  const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
   function setToolTipVisible(buttonId: string) {

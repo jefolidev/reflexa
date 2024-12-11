@@ -1,5 +1,11 @@
 type PriorityValues = 1 | 2 | 3 | 4 | 5
 
+import depressionIcon from '../../assets/emojis/depression.svg'
+import excitedIcon from '../../assets/emojis/excited.svg'
+import happyIcon from '../../assets/emojis/happy.svg'
+import neutralIcon from '../../assets/emojis/neutral.svg'
+import unhappyIcon from '../../assets/emojis/unhappy.svg'
+
 interface TaskPriorityProps {
   priorityLevel: PriorityValues
 }
@@ -14,11 +20,19 @@ export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
   }
 
   const styles = priorityStyles[priorityLevel]
+  const emojisBasedOnPriority: Record<PriorityValues, string> = {
+    5: excitedIcon,
+    4: happyIcon,
+    3: neutralIcon,
+    2: unhappyIcon,
+    1: depressionIcon,
+  }
 
   return (
     <div
-      className={`flex ${styles} rounded-full w-16 h-7 justify-center items-center p-1`}
+      className={`flex ${styles} rounded-full w-16 h-7 justify-center gap-2 items-center p-1`}
     >
+      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className='w-5 '/>
       <span className="font-monts font-medium text-lg">{priorityLevel}</span>
     </div>
   )
