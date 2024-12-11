@@ -2,7 +2,7 @@ import { DefaultTag } from './components/default'
 import { FinishedTag } from './components/finished'
 import { UnfinishedTag } from './components/unfinished'
 
-type TaskStatusValues = 'default' | 'completed' | 'unfinished'
+export type TaskStatusValues = 'default' | 'completed' | 'unfinished'
 
 interface TaskActionProps {
   status?: TaskStatusValues

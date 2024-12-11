@@ -12,11 +12,11 @@ interface TaskPriorityProps {
 
 export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
   const priorityStyles: Record<PriorityValues, string> = {
-    1: 'bg-red-800 text-red-400',
-    2: 'bg-red-700 text-red-300',
-    3: 'bg-yellow-600 text-yellow-300',
-    4: 'bg-green-600 text-green-300',
-    5: 'bg-green-800 text-green-400',
+    1: 'bg-red-800/60 text-red-400',
+    2: 'bg-red-800/60 text-red-300',
+    3: 'bg-yellow-600/60 text-yellow-300',
+    4: 'bg-green-800/60 text-green-300',
+    5: 'bg-green-800/60 text-green-400',
   }
 
   const styles = priorityStyles[priorityLevel]
@@ -32,7 +32,7 @@ export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
     <div
       className={`flex ${styles} rounded-full w-16 h-7 justify-center gap-2 items-center p-1`}
     >
-      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className='w-5 '/>
+      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className="w-5 " />
       <span className="font-monts font-medium text-lg">{priorityLevel}</span>
     </div>
   )

@@ -1,11 +1,15 @@
-import type { ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
+
 import { TaskCounter } from './components/tasks-counter'
+
+import arrow from '../../assets/arrow.svg'
 
 interface WeeklyWrapperCard {
   children: ReactNode
   hasStatus?: boolean
   completedTasks?: number
   uncompletedTasks?: number
+  isOpen?: boolean
 }
 
 export function WeeklyWrapperCard({
@@ -13,22 +17,47 @@ export function WeeklyWrapperCard({
   hasStatus = false,
   completedTasks,
   uncompletedTasks,
+  isOpen = true,
 }: WeeklyWrapperCard) {
-  return (
-    <div className="flex py-2 bg-stone-950/75 flex-col rounded-xl">
-      <header className="px-6 p-3 flex justify-between">
-        <h2>04 Dez, 2024</h2>
-        {hasStatus ? (
-          <TaskCounter
-            completedTasks={completedTasks}
-            uncompletedTasks={uncompletedTasks}
-          />
-        ) : (
-          ''
-        )}
-      </header>
+  const [isCardWrapperOpen, setIsCardWrapperOpen] = useState(isOpen)
 
-      <main className="flex flex-col gap-4 px-2">{children}</main>
+  const cardContentVisibility = !isCardWrapperOpen ? 'invisible' : 'visible'
+  const cardSizeStyle = isCardWrapperOpen ? '' : 'h-16'
+  const arrowTurnDown = isCardWrapperOpen ? 'rotate-90' : ''
+
+  function switchWrapperState() {
+    setIsCardWrapperOpen((prevState) => !prevState)
+  }
+
+  return (
+    <div
+      className={`${cardSizeStyle} flex py-2 bg-stone-950/75 flex-col rounded-xl`}
+    >
+      <header className="px-6 py-3 flex justify-between">
+        <h2>04 Dez, 2024</h2>
+        <div className="flex gap-4">
+          {hasStatus ? (
+            <TaskCounter
+              completedTasks={completedTasks}
+              uncompletedTasks={uncompletedTasks}
+            />
+          ) : (
+            ''
+          )}
+          <button
+            type="button"
+            className="noStyleButton"
+            onClick={switchWrapperState}
+          >
+            <img src={arrow} alt="" className={`${arrowTurnDown}`} />
+          </button>
+        </div>
+      </header>
+      <main
+        className={`flex flex-col gap-4 px-2 max-h-[23rem]  overflow-scroll ${cardContentVisibility}`}
+      >
+        {children}
+      </main>
     </div>
   )
 }

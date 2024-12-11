@@ -7,7 +7,7 @@ export function UncompletedTasksPage() {
       <header>
         <h2>Você deixou 8 tarefas pendentes ao decorrer dessa semana</h2>
       </header>
-      <WeeklyWrapperCard hasStatus completedTasks={5} uncompletedTasks={2}>
+      <WeeklyWrapperCard>
         <TaskCard.Root>
           <TaskCard.Header
             taskName="Levar o cachorro pro médico"

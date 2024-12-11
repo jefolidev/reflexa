@@ -7,9 +7,10 @@ export function CompletedTasksPage() {
       <header>
         <h2>Você concluiu 8 tarefas ao decorrer dessa semana</h2>
       </header>
-      <WeeklyWrapperCard >
+      <WeeklyWrapperCard>
         <TaskCard.Root>
           <TaskCard.Header
+            status={'completed'}
             taskName="Levar o cachorro pro médico"
             taskTag="Pessoal"
           />
@@ -19,6 +20,7 @@ export function CompletedTasksPage() {
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
+            status={'completed'}
             taskName="Levar o cachorro pro médico"
             taskTag="Pessoal"
           />
