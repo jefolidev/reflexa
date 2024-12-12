@@ -1,4 +1,4 @@
-type PriorityValues = 1 | 2 | 3 | 4 | 5
+import checkDefaultEmoji from '../../../../assets/checklist/check-default.svg'
 
 import depressionIcon from '../../../../assets/emojis-priority/depression.svg'
 import excitedIcon from '../../../../assets/emojis-priority/excited.svg'
@@ -6,11 +6,13 @@ import happyIcon from '../../../../assets/emojis-priority/happy.svg'
 import neutralIcon from '../../../../assets/emojis-priority/neutral.svg'
 import unhappyIcon from '../../../../assets/emojis-priority/unhappy.svg'
 
-interface TaskPriorityProps {
+type PriorityValues = 1 | 2 | 3 | 4 | 5
+
+interface SimpleTaskCardProps {
   priorityLevel: PriorityValues
 }
 
-export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
+export function SimpleTaskCard({ priorityLevel }: SimpleTaskCardProps) {
   const priorityStyles: Record<PriorityValues, string> = {
     1: 'bg-red-800/60 text-red-400',
     2: 'bg-red-800/60 text-red-300',
@@ -29,11 +31,21 @@ export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
   }
 
   return (
-    <div
-      className={`flex ${styles} rounded-full w-16 h-7 justify-center gap-2 items-center p-1`}
-    >
-      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className="w-2 " />
-      <span className="font-monts font-medium text-lg">{priorityLevel}</span>
+    <div className="flex flex-col w-72">
+      <div className="flex justify-between items-center bg-stone-900 p-3.5 rounded-lg hover:bg-stone-800 hover:cursor-pointer">
+        <img src={checkDefaultEmoji} alt="" />
+        <span className="font-poppins text-sm text-white ">Arrumar a cama</span>
+        <div className={`${styles} rounded-full w-12 flex justify-center`}>
+          <img
+            src={emojisBasedOnPriority[priorityLevel]}
+            alt=""
+            className="w-5 "
+          />
+          <span className="font-monts  text-green-300 font-bold text-sm p-1 ">
+            5
+          </span>
+        </div>
+      </div>
     </div>
   )
 }
