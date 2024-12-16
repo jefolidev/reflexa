@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router'
 import plus from '../assets/common-assets/plus.svg'
 import completedIcon from '../assets/navbar-icons/completed.svg'
 import otherWeeksIcon from '../assets/navbar-icons/other-weeks.svg'
 import pendingIcon from '../assets/navbar-icons/sandtime.svg'
 import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
+import { NewGoalModal } from '../pages/goals/components/new-task-modal'
 
 /* 
     TODO - 
@@ -13,11 +15,25 @@ import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
 const activeTabStyle = 'border-b-2 border-white '
 
 export function TasksLayout() {
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+
+  const modalVisibility = isVisible ? 'visible' : 'invisible'
+
+  function turnTheModalState() {
+    setIsVisible((prevVisibility) => !prevVisibility)
+  }
+
   return (
     <div className=" bg-zinc-800 w-screen h-screen flex-col p-12 relative">
-      <button type="button" className="btn-default btn-secondary">
+      <button
+        type="button"
+        className="btn-default btn-secondary"
+        onClick={turnTheModalState}
+      >
         <img src={plus} alt="" />
       </button>
+      <NewGoalModal onClick={turnTheModalState} visibility={modalVisibility} />
+
       <header className="mb-4">
         <span className="text-stone-500 text-sm font-poppins inline-flex gap-1">
           Dashboard / <p className="text-white">Objetivos</p>

@@ -66,3 +66,26 @@ h4 {
   margin: 0 0 !important;
   padding: 0 !important;
 }
+
+label {
+  color: white;
+}
+
+fieldset > div {
+  gap: 0.5rem;
+}
+
+input {
+  all: unset;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 0.3125rem;
+  background-color: #292524;
+  font-size: 0.875rem;
+
+  &:focus,
+  &:target {
+    border: none;
+    outline: none;
+  }
+}
