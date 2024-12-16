@@ -11,8 +11,8 @@ interface ModalProps {
 export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
   const [goalName, setGoalName] = useState<string>('')
   const [goalCategory, setGoalCategory] = useState<string>('')
-  const [initialHour, setInitialHour] = useState<number>()
-  const [endHour, setEndHour] = useState<number>()
+  const [initialHour, setInitialHour] = useState<string>()
+  const [endHour, setEndHour] = useState<string>()
   const [priority, setPriority] = useState<PriorityValues>(1)
 
   const { setNewGoal } = useGoals()
@@ -82,7 +82,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
                   name="initialHour"
                   placeholder="08"
                   className="flex-1"
-                  onChange={(e) => setInitialHour(Number(e.target.value))}
+                  onChange={(e) => setInitialHour(e.target.value)}
                 />
               </div>
               <div className="flex flex-col flex-2">
@@ -92,7 +92,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
                   name="endHour"
                   placeholder="12"
                   className="flex-1"
-                  onChange={(e) => setEndHour(Number(e.target.value))}
+                  onChange={(e) => setEndHour(e.target.value)}
                 />
               </div>
             </div>

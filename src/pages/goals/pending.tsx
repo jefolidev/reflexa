@@ -20,16 +20,18 @@ export function PendingTasksPage() {
         </div>
       </header>
       <main className="flex flex-col gap-3">
-        {goals.map(({ id, name, category, priority, status }) => {
-          return (
-            <TaskCard.Root key={id}>
-              <TaskCard.Header taskName={name} taskTag={category} />
-              <TaskCard.Hours />
-              <TaskPriority priorityLevel={priority} />
-              <TaskCard.Action status={status} />
-            </TaskCard.Root>
-          )
-        })}
+        {goals.map(
+          ({ id, name, category, priority, status, startHour, endHour }) => {
+            return (
+              <TaskCard.Root key={id}>
+                <TaskCard.Header taskName={name} taskTag={category} />
+                <TaskCard.Hours startHour={startHour} endHour={endHour} />
+                <TaskPriority priorityLevel={priority} />
+                <TaskCard.Action status={status} />
+              </TaskCard.Root>
+            )
+          }
+        )}
       </main>
     </div>
   )
