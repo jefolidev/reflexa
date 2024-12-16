@@ -1,4 +1,4 @@
-type PriorityValues = 1 | 2 | 3 | 4 | 5
+export type PriorityValues = 1 | 2 | 3 | 4 | 5
 
 import depressionIcon from '../../../../assets/emojis-priority/depression.svg'
 import excitedIcon from '../../../../assets/emojis-priority/excited.svg'

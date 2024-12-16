@@ -1,7 +1,10 @@
+import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
 import { TaskPriority } from './components/task-card/priority'
 
 export function PendingTasksPage() {
+  const { goals } = useGoals()
+
   return (
     <div>
       <header className="my-6">
@@ -17,36 +20,16 @@ export function PendingTasksPage() {
         </div>
       </header>
       <main className="flex flex-col gap-3">
-        <TaskCard.Root>
-          <TaskCard.Header taskName="Organizar a casa" taskTag="Pessoal" />
-          <TaskCard.Hours />
-          <TaskPriority priorityLevel={1} />
-          <TaskCard.Action />
-        </TaskCard.Root>
-        <TaskCard.Root>
-          <TaskCard.Header taskName="Organizar a casa" taskTag="Pessoal" />
-          <TaskCard.Hours />
-          <TaskPriority priorityLevel={2} />
-          <TaskCard.Action />
-        </TaskCard.Root>
-        <TaskCard.Root>
-          <TaskCard.Header taskName="Estudar Node" taskTag="Pessoal" />
-          <TaskCard.Hours />
-          <TaskPriority priorityLevel={3} />
-          <TaskCard.Action />
-        </TaskCard.Root>
-        <TaskCard.Root>
-          <TaskCard.Header taskName="Estudar Node" taskTag="Pessoal" />
-          <TaskCard.Hours />
-          <TaskPriority priorityLevel={4} />
-          <TaskCard.Action />
-        </TaskCard.Root>
-        <TaskCard.Root>
-          <TaskCard.Header taskName="Estudar para biologia" taskTag="Pessoal" />
-          <TaskCard.Hours />
-          <TaskPriority priorityLevel={5} />
-          <TaskCard.Action />
-        </TaskCard.Root>
+        {goals.map(({ id, name, category, priority, status }) => {
+          return (
+            <TaskCard.Root key={id}>
+              <TaskCard.Header taskName={name} taskTag={category} />
+              <TaskCard.Hours />
+              <TaskPriority priorityLevel={priority} />
+              <TaskCard.Action status={status} />
+            </TaskCard.Root>
+          )
+        })}
       </main>
     </div>
   )
