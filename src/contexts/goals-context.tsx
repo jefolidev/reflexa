@@ -6,8 +6,8 @@ interface GoalsProps {
   id: number
   name: string
   category: string
-  startHour?: number
-  endHour?: number
+  startHour?: string
+  endHour?: string
   priority: PriorityValues
   status: TaskStatusValues
 }
@@ -18,7 +18,7 @@ interface GoalsProviderProps {
 
 interface GoalsContextProps {
   goals: GoalsProps[]
-  createNewGoal: (goals: GoalsProps) => void
+  setNewGoal: (goals: GoalsProps) => void
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -31,18 +31,17 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
       id: goalId,
       name: 'Estudar Unidade I direito digital',
       category: 'Faculdade',
-      startHour: 10,
-      endHour: 12,
+      startHour: '10',
+      endHour: '12',
       priority: 1,
       status: 'pending',
     },
   ])
 
-  function createNewGoal({
+  function setNewGoal({
     name,
     category,
     priority,
-    status,
     startHour,
     endHour,
   }: GoalsProps) {
@@ -53,15 +52,17 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         name,
         category,
         priority,
-        status,
         startHour,
         endHour,
+        status: 'pending',
       },
     ])
+
+    console.log(goals)
   }
 
   return (
-    <GoalsContext.Provider value={{ goals, createNewGoal }}>
+    <GoalsContext.Provider value={{ goals, setNewGoal }}>
       {children}
     </GoalsContext.Provider>
   )

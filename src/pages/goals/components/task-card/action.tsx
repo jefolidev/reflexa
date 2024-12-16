@@ -5,7 +5,7 @@ import { UnfinishedTag } from './components/unfinished'
 export type TaskStatusValues = 'pending' | 'completed' | 'unfinished'
 
 interface TaskActionProps {
-  status?: TaskStatusValues
+  status: TaskStatusValues
 }
 
 export function TaskAction({ status = 'pending' }: TaskActionProps) {
