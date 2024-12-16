@@ -4,7 +4,8 @@
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-weight: 700;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
@@ -22,17 +23,69 @@ h3 {
   font-size: 1rem;
 }
 
-button[type='button'] {
-  background-color: white;
-  border-radius: 99999px;
-  color: #0d0d0d;
-  margin: 0 auto;
-  padding: 0.5rem;
+h4 {
+  font-size: 0.925rem;
+}
 
+.btn-default {
+  border-radius: 99999px;
+
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
-  min-width:  1rem;
-  min-height: 1rem ;
+.btn-secondary {
+  background-color: #fff;
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+
+  padding: 0.875rem;
+
+  &:hover {
+    background-color: #e2e2e2;
+  }
+}
+
+.btn-main {
+  background-color: white;
+  color: #0d0d0d;
+
+  min-width: 1rem;
+  min-height: 1rem;
+
+  &:hover {
+    background-color: rgb(229, 229, 229);
+  }
+}
+
+.noStyleButton {
+  background-color: transparent !important;
+  margin: 0 0 !important;
+  padding: 0 !important;
+}
+
+label {
+  color: white;
+}
+
+fieldset > div {
+  gap: 0.5rem;
+}
+
+input {
+  all: unset;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  border-radius: 0.3125rem;
+  background-color: #292524;
+  font-size: 0.875rem;
+
+  &:focus,
+  &:target {
+    border: none;
+    outline: none;
+  }
 }
