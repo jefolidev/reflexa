@@ -27,16 +27,31 @@ h4 {
   font-size: 0.925rem;
 }
 
-button[type='button'] {
-  background-color: white;
+.btn-default {
   border-radius: 99999px;
-  color: #0d0d0d;
-  margin: 0 auto;
-  padding: 0.5rem;
 
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn-secondary {
+  background-color: #fff;
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+
+  padding: 0.875rem;
+
+  &:hover {
+    background-color: #e2e2e2;
+  }
+}
+
+.btn-main {
+  background-color: white;
+  color: #0d0d0d;
 
   min-width: 1rem;
   min-height: 1rem;

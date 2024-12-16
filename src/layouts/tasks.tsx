@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router'
+import plus from '../assets/common-assets/plus.svg'
 import completedIcon from '../assets/navbar-icons/completed.svg'
 import otherWeeksIcon from '../assets/navbar-icons/other-weeks.svg'
 import pendingIcon from '../assets/navbar-icons/sandtime.svg'
@@ -13,7 +14,10 @@ const activeTabStyle = 'border-b-2 border-white '
 
 export function TasksLayout() {
   return (
-    <div className=" bg-zinc-800 w-screen h-screen flex-col p-12">
+    <div className=" bg-zinc-800 w-screen h-screen flex-col p-12 relative">
+      <button type="button" className="btn-default btn-secondary">
+        <img src={plus} alt="" />
+      </button>
       <header className="mb-4">
         <span className="text-stone-500 text-sm font-poppins inline-flex gap-1">
           Dashboard / <p className="text-white">Objetivos</p>

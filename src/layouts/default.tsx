@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router'
 
-import profileIcon from '../assets/misc/profile-icon.svg'
+import profileIcon from '../assets/common-assets/profile-icon.svg'
 import chatIcon from '../assets/sidebar-icons/chat-icon.svg'
 import flagIcon from '../assets/sidebar-icons/flag-icon.svg'
 import homeIcon from '../assets/sidebar-icons/home-icon.svg'

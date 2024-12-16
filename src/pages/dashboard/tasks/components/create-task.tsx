@@ -1,4 +1,4 @@
-import plus from '../../../../assets/misc/plus.svg'
+import plus from '../../../../assets/common-assets/plus.svg'
 
 export function CreateTaskCard() {
   return (

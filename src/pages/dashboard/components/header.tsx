@@ -1,4 +1,4 @@
-import pencilEmoji from '../../../assets/misc/pencil-emoji.png'
+import pencilEmoji from '../../../assets/common-assets/pencil-emoji.png'
 
 interface DashboardHeaderProps {
   userName: string
@@ -21,7 +21,10 @@ export function DashboardHeader({
       </div>
       <div className="flex items-center gap-4">
         <h2>Como está sendo seu dia?</h2>
-        <button className="flex items-center p-2" type="button">
+        <button
+          className="btn-main btn-default flex items-center p-2"
+          type="button"
+        >
           <img src={pencilEmoji} alt="" />
         </button>
       </div>

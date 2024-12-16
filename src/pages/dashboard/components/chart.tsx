@@ -1,4 +1,4 @@
-import turnArrowIcon from '../../../assets/misc/arrow-cycle.svg'
+import turnArrowIcon from '../../../assets/common-assets/arrow-cycle.svg'
 
 type ChartType = 'mood' | 'tasks'
 

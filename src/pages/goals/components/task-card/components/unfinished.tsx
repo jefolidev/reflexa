@@ -1,4 +1,4 @@
-import unfinishedIcon from '../../assets/tags/unfinished.svg'
+import unfinishedIcon from '../../../assets/tags/unfinished.svg'
 
 export function UnfinishedTag() {
   return (

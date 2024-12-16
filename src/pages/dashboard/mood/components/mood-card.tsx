@@ -1,7 +1,7 @@
+import arrowLeft from '../../../../assets/common-assets/arrow-left.svg'
+import arrowRight from '../../../../assets/common-assets/arrow-right.svg'
+import check from '../../../../assets/common-assets/check.svg'
 import happy from '../../../../assets/emojis-card/happy-emotion.svg'
-import arrowLeft from '../../../../assets/misc/arrow-left.svg'
-import arrowRight from '../../../../assets/misc/arrow-right.svg'
-import check from '../../../../assets/misc/check.svg'
 
 export function MoodCard() {
   return (
@@ -23,14 +23,17 @@ export function MoodCard() {
 
       <div className="flex gap-2">
         <div className="flex gap-1">
-          <button type="button" className="w-8 h-8">
+          <button
+            type="button"
+            className="btn-main btn-default btn-default w-8 h-8"
+          >
             <img src={arrowLeft} alt="" />
           </button>
-          <button type="button" className="w-8 h-8">
+          <button type="button" className=" btn-main btn-default w-8 h-8">
             <img src={arrowRight} alt="" />
           </button>
         </div>
-        <button type="button" className="w-8 h-8">
+        <button type="button" className=" btn-main btn-default w-8 h-8">
           <img src={check} alt="" className="" />
         </button>
       </div>

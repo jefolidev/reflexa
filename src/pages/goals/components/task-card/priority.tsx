@@ -32,7 +32,7 @@ export function TaskPriority({ priorityLevel }: TaskPriorityProps) {
     <div
       className={`flex ${styles} rounded-full w-16 h-7 justify-center gap-2 items-center p-1`}
     >
-      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className="w-2 " />
+      <img src={emojisBasedOnPriority[priorityLevel]} alt="" className="w-5 " />
       <span className="font-monts font-medium text-lg">{priorityLevel}</span>
     </div>
   )

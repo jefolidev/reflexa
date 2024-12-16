@@ -2,10 +2,10 @@ import { Route, Routes } from 'react-router'
 import { DefaultLayout } from '../layouts/default'
 import { TasksLayout } from '../layouts/tasks'
 import { DashboardPage } from '../pages/dashboard'
-import { CompletedTasksPage } from '../pages/tasks/completed'
-import { OtherWeeksTasksPage } from '../pages/tasks/other-weeks'
-import { PendingTasksPage } from '../pages/tasks/pending'
-import { UncompletedTasksPage } from '../pages/tasks/uncompleted'
+import { CompletedTasksPage } from '../pages/goals/completed'
+import { OtherWeeksTasksPage } from '../pages/goals/other-weeks'
+import { PendingTasksPage } from '../pages/goals/pending'
+import { UncompletedTasksPage } from '../pages/goals/uncompleted'
 
 export function Router() {
   return (
