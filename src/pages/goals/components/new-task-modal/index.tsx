@@ -34,6 +34,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
       endHour: endHour,
       startHour: initialHour,
       status: 'pending',
+      createdAt: new Date()
     })
 
     clearInputs()

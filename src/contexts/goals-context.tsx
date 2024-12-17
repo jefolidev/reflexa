@@ -10,6 +10,7 @@ interface GoalsProps {
   endHour?: string
   priority: PriorityValues
   status: TaskStatusValues
+  createdAt: Date
 }
 
 interface GoalsProviderProps {
@@ -38,6 +39,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
       endHour: '12',
       priority: 1,
       status: 'pending',
+      createdAt: new Date(),
     },
   ])
 
@@ -67,6 +69,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         startHour,
         endHour,
         status: 'pending',
+        createdAt: new Date(),
       },
     ])
 
