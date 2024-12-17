@@ -67,6 +67,16 @@ h4 {
   padding: 0 !important;
 }
 
+button:disabled {
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.5;
+    background-color: white;
+    cursor: not-allowed;
+  }
+}
+
 label {
   color: white;
 }

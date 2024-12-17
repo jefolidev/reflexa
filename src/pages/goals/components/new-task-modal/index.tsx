@@ -11,11 +11,18 @@ interface ModalProps {
 export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
   const [goalName, setGoalName] = useState<string>('')
   const [goalCategory, setGoalCategory] = useState<string>('')
-  const [initialHour, setInitialHour] = useState<string>()
-  const [endHour, setEndHour] = useState<string>()
+  const [initialHour, setInitialHour] = useState<string>('')
+  const [endHour, setEndHour] = useState<string>('')
   const [priority, setPriority] = useState<PriorityValues>(1)
 
   const { setNewGoal } = useGoals()
+
+  function clearInputs() {
+    setGoalName('')
+    setGoalCategory('')
+    setInitialHour('')
+    setEndHour('')
+  }
 
   function createNewGoal(e: FormEvent) {
     e.preventDefault()
@@ -29,6 +36,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
       status: 'pending',
     })
 
+    clearInputs()
     turnTheModalState()
   }
 
@@ -54,66 +62,72 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
         </header>
         <form className="flex flex-col gap-5">
           <fieldset className="flex gap-5 ">
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col flex-2 justify-between">
               <label htmlFor="">Nome da tarefa</label>
               <input
                 type="text"
+                value={goalName}
                 name="name"
                 placeholder="Tarefa 1"
                 onChange={(e) => setGoalName(e.target.value)}
+                required
               />
             </div>
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col flex-2 justify-between">
               <label htmlFor="">Categoria</label>
               <input
                 type="text"
+              value={goalCategory}
                 name="category"
                 placeholder="Pessoal, Trabalho..."
                 onChange={(e) => setGoalCategory(e.target.value)}
+                required
               />
             </div>
           </fieldset>
-          <fieldset className="flex gap-5 items-center">
-            <div className="flex flex-2">
-              <div className="flex flex-2 flex-col">
-                <label htmlFor="">Hora inicial</label>
-                <input
-                  type="number"
-                  name="initialHour"
-                  placeholder="08"
-                  className="flex-1"
-                  onChange={(e) => setInitialHour(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col flex-2">
-                <label htmlFor="">Hora final</label>
-                <input
-                  type="number"
-                  name="endHour"
-                  placeholder="12"
-                  className="flex-1"
-                  onChange={(e) => setEndHour(e.target.value)}
-                />
-              </div>
+          <fieldset className="flex gap-5">
+            <div className="flex flex-col">
+              <label htmlFor="">Hora inicial</label>
+              <input
+                type="number"
+                value={initialHour}
+                name="initialHour"
+                className="flex-1"
+                onChange={(e) => setInitialHour(e.target.value)}
+                required
+              />
             </div>
-            <div className="flex flex-col justify-between flex-2">
+            <div className="flex flex-col">
+              <label htmlFor="">Hora final</label>
+              <input
+                type="number"
+                value={endHour}
+                name="endHour"
+                className="flex-1"
+                onChange={(e) => setEndHour(e.target.value)}
+                required
+              />
+            </div>
+            <div className="flex flex-col  ">
               <label htmlFor="">Prioridade</label>
               <input
                 type="number"
+                value={priority}
                 name="priority"
-                id=""
                 placeholder="4"
                 min={1}
                 max={5}
                 onChange={(e) =>
                   setPriority(Number(e.target.value) as PriorityValues)
                 }
+                required
               />
             </div>
           </fieldset>
           <button
             type="submit"
             className="btn-main p-2 font-semibold rounded-md justify-center flex"
+            disabled={!goalName || !goalCategory || !priority}
             onClick={createNewGoal}
           >
             Criar tarefa

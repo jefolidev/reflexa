@@ -18,6 +18,9 @@ interface GoalsProviderProps {
 
 interface GoalsContextProps {
   goals: GoalsProps[]
+  totalGoals: number
+  completedGoals: GoalsProps[]
+  highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
 }
 
@@ -37,6 +40,15 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
       status: 'pending',
     },
   ])
+
+  const totalGoals = goals.length
+  const completedGoals = goals.filter((goal) => {
+    return goal.status === 'completed'
+  })
+
+  const highOrderGoals = goals.filter((goal) => {
+    return goal.priority === 5
+  })
 
   function setNewGoal({
     name,
@@ -62,7 +74,9 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   return (
-    <GoalsContext.Provider value={{ goals, setNewGoal }}>
+    <GoalsContext.Provider
+      value={{ goals, setNewGoal, totalGoals, completedGoals, highOrderGoals }}
+    >
       {children}
     </GoalsContext.Provider>
   )
