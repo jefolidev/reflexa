@@ -15,7 +15,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
-  const { setGoalAsFinished, finishedGoals } = useGoals()
+  const { setGoalAsFinished } = useGoals()
 
   function setToolTipVisible(buttonId: string) {
     setActiveToolTip(buttonId)
@@ -26,12 +26,9 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   }
 
   function clickButtonHandler(id: string) {
-    setIsButtonActive((prevButtonState) => !prevButtonState)
-    console.log(isButtonActive, id)
-    if (isButtonActive) {
-      setGoalAsFinished(id)
-      console.log(finishedGoals)
-    }
+    setIsButtonActive((prevState) => !prevState)
+
+    setGoalAsFinished(id)
   }
 
   function hoverButtonHandler() {
@@ -74,7 +71,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
           <img src={checkedIcon} alt="" className="w-6 opacity-75" />
         ) : (
           <img
-            src={isButtonActive ? checkedIcon : uncheckedIcon}
+            src={!isButtonActive ? uncheckedIcon : checkedIcon}
             alt=""
             className="w-6"
           />
