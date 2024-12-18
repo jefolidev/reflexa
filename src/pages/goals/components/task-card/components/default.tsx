@@ -1,14 +1,21 @@
 import { useState } from 'react'
+import { useGoals } from '../../../../../hooks/useGoals'
 import uncheckedIcon from '../../../assets/check-default.svg'
 import checkedIcon from '../../../assets/checked.svg'
 import editIcon from '../../../assets/edit.svg'
 import deleteIcon from '../../../assets/trash.svg'
 import { ToolTip } from './tooltip'
 
-export function DefaultTag() {
+interface DefaultTagProps {
+  taskId: string
+}
+
+export function DefaultTag({ taskId }: DefaultTagProps) {
   const [isButtonActive, setIsButtonActive] = useState<boolean>(false)
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
+
+  const { setGoalAsFinished, finishedGoals } = useGoals()
 
   function setToolTipVisible(buttonId: string) {
     setActiveToolTip(buttonId)
@@ -18,8 +25,13 @@ export function DefaultTag() {
     setActiveToolTip(null)
   }
 
-  function clickButtonHandler() {
+  function clickButtonHandler(id: string) {
     setIsButtonActive((prevButtonState) => !prevButtonState)
+    console.log(isButtonActive, id)
+    if (isButtonActive) {
+      setGoalAsFinished(id)
+      console.log(finishedGoals)
+    }
   }
 
   function hoverButtonHandler() {
@@ -54,7 +66,7 @@ export function DefaultTag() {
       <button
         type="button"
         className="noStyleButton"
-        onClick={clickButtonHandler}
+        onClick={() => clickButtonHandler(taskId)}
         onMouseEnter={hoverButtonHandler}
         onMouseLeave={hoverButtonHandler}
       >

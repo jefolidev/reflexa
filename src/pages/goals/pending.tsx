@@ -25,11 +25,11 @@ export function PendingTasksPage() {
         {goals.map(
           ({ id, name, category, priority, status, startHour, endHour }) => {
             return (
-              <TaskCard.Root key={id}>
+              <TaskCard.Root key={name}>
                 <TaskCard.Header taskName={name} taskTag={category} />
                 <TaskCard.Hours startHour={startHour} endHour={endHour} />
                 <TaskPriority priorityLevel={priority} />
-                <TaskCard.Action status={status} />
+                <TaskCard.Action status={status} taskId={id} />
               </TaskCard.Root>
             )
           }
