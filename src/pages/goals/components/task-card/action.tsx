@@ -5,10 +5,11 @@ import { UnfinishedTag } from './components/unfinished'
 export type TaskStatusValues = 'pending' | 'completed' | 'unfinished'
 
 interface TaskActionProps {
-  status?: TaskStatusValues
+  status: TaskStatusValues
+  taskId: string
 }
 
-export function TaskAction({ status = 'pending' }: TaskActionProps) {
+export function TaskAction({ status = 'pending', taskId }: TaskActionProps) {
   function getStatusComponent(status: TaskStatusValues) {
     switch (status) {
       case 'unfinished':
@@ -16,7 +17,7 @@ export function TaskAction({ status = 'pending' }: TaskActionProps) {
       case 'completed':
         return <FinishedTag />
       default:
-        return <DefaultTag />
+        return <DefaultTag taskId={taskId} />
     }
   }
   return <div className="flex gap-2 ">{getStatusComponent(status)}</div>

@@ -32,7 +32,7 @@ export function TasksLayout() {
       >
         <img src={plus} alt="" />
       </button>
-      <NewGoalModal onClick={turnTheModalState} visibility={modalVisibility} />
+      <NewGoalModal turnTheModalState={turnTheModalState} visibility={modalVisibility} />
 
       <header className="mb-4">
         <span className="text-stone-500 text-sm font-poppins inline-flex gap-1">

@@ -1,10 +1,10 @@
-export type PriorityValues = 1 | 2 | 3 | 4 | 5
-
 import depressionIcon from '../../../../assets/emojis-priority/depression.svg'
 import excitedIcon from '../../../../assets/emojis-priority/excited.svg'
 import happyIcon from '../../../../assets/emojis-priority/happy.svg'
 import neutralIcon from '../../../../assets/emojis-priority/neutral.svg'
 import unhappyIcon from '../../../../assets/emojis-priority/unhappy.svg'
+
+export type PriorityValues = 1 | 2 | 3 | 4 | 5
 
 interface TaskPriorityProps {
   priorityLevel: PriorityValues
