@@ -5,10 +5,14 @@ import { WeeklyWrapperCard } from './components/wrapper-card'
 export function CompletedTasksPage() {
   const { finishedGoals } = useGoals()
 
+  const totalFinishedGoals = finishedGoals.length
+
   return (
     <div className="flex flex-col gap-4 py-[20px]">
       <header>
-        <h2>Você concluiu 8 tarefas ao decorrer dessa semana</h2>
+        <h2>
+          Você concluiu {totalFinishedGoals} tarefas ao decorrer dessa semana
+        </h2>
       </header>
       <WeeklyWrapperCard>
         {finishedGoals.map(({ id, name, category, priority, status }) => {
@@ -19,7 +23,6 @@ export function CompletedTasksPage() {
                 taskName={name}
                 taskTag={category}
               />
-              <TaskCard.Hours />
               <TaskCard.Priority priorityLevel={priority} />
               <TaskCard.Action status={status} taskId={id} />
             </TaskCard.Root>

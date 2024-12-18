@@ -11,7 +11,6 @@ interface DefaultTagProps {
 }
 
 export function DefaultTag({ taskId }: DefaultTagProps) {
-  const [isButtonActive, setIsButtonActive] = useState<boolean>(false)
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
@@ -26,8 +25,6 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   }
 
   function clickButtonHandler(id: string) {
-    setIsButtonActive((prevState) => !prevState)
-
     setGoalAsFinished(id)
   }
 
@@ -70,11 +67,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
         {isButtonHovered ? (
           <img src={checkedIcon} alt="" className="w-6 opacity-75" />
         ) : (
-          <img
-            src={!isButtonActive ? uncheckedIcon : checkedIcon}
-            alt=""
-            className="w-6"
-          />
+          <img src={uncheckedIcon} alt="" className="w-6" />
         )}
       </button>
     </div>

@@ -18,7 +18,6 @@ export function PendingTasksPage() {
             de <p className="font-bold inline-block ">{totalGoals}</p> tarefas
             concluídas
           </span>
-          <span className="font-monts font-sm text-white ">50%</span>
         </div>
       </header>
       <main className="flex flex-col gap-3">
