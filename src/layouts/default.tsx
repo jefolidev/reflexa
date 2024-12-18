@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router'
+import { Outlet } from 'react-router'
+import { NavBarTab } from '../components/navbar'
 
 import profileIcon from '../assets/common-assets/profile-icon.svg'
 import chatIcon from '../assets/sidebar-icons/chat-icon.svg'
@@ -21,48 +22,15 @@ export function DefaultLayout() {
             </span>
           </header>
           <main className="flex flex-col gap-6 px-2 py-6 ">
-            <NavLink to={'/'}>
-              <div className="flex gap-6 items-center ">
-                <img src={homeIcon} className="w-6" alt="" />
-                <span className="font-monts font-semibold  text-stone-400  ">
-                  Dashboard
-                </span>
-              </div>
-            </NavLink>
-            <NavLink to={'/tasks/pending'}>
-              <div className="flex gap-6 items-center ">
-                <img src={objIcon} className="w-6" alt="" />
-                <span className="font-monts font-semibold  text-stone-400 ">
-                  Objetivos
-                </span>
-              </div>
-            </NavLink>
-            <a href="#a">
-              <div className="flex gap-6 items-center shrink-0 ">
-                <img src={smileIcon} className="w-6" alt="" />
-                <span className="  font-monts font-semibold  text-nowrap text-stone-400 ">
-                  Histórico de humor
-                </span>
-              </div>
-            </a>
-            <a href="#a">
-              <div className="flex gap-6 items-center ">
-                <img src={chatIcon} className="w-6" alt="" />
-                <span className="font-monts font-semibold  text-stone-400 ">
-                  Anotações
-                </span>
-              </div>
-            </a>
-            <a href="#a">
-              <div className="flex gap-6 items-center ">
-                <div className="w-6">
-                  <img src={flagIcon} className="w-5  mx-0.5" alt="" />
-                </div>
-                <span className="font-monts font-semibold text-stone-400  ">
-                  Hábitos
-                </span>
-              </div>
-            </a>
+            <NavBarTab to="/" icon={homeIcon} label="Dashboard" />
+            <NavBarTab to="/tasks/pending" icon={objIcon} label="Objetivos" />
+            <NavBarTab
+              to="/history"
+              icon={smileIcon}
+              label="Histórico de Humor"
+            />
+            <NavBarTab to="/notes" icon={chatIcon} label="Anotações" />
+            <NavBarTab to="/habits" icon={flagIcon} label="Hábitos" />
           </main>
         </div>
       </aside>
