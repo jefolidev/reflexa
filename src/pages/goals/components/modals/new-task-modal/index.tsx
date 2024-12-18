@@ -1,14 +1,15 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import { type FormEvent, useState } from 'react'
-import closeIcon from '../../../../assets/common-assets/close.svg'
-import { useGoals } from '../../../../hooks/useGoals'
-import type { PriorityValues } from '../task-card/priority'
+import { ModalButton } from '../../../../../components/modal/button'
+import { ModalContent } from '../../../../../components/modal/content'
+import { ModalHeader } from '../../../../../components/modal/header'
+import { ModalRoot } from '../../../../../components/modal/root'
+import { useGoals } from '../../../../../hooks/useGoals'
+import { useModal } from '../../../../../hooks/useModal'
+import type { PriorityValues } from '../../task-card/priority'
 
-interface ModalProps {
-  visibility: string
-  turnTheModalState: () => void
-}
-
-export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
+export function NewGoalModal() {
   const [goalName, setGoalName] = useState<string>('')
   const [goalCategory, setGoalCategory] = useState<string>('')
   const [initialHour, setInitialHour] = useState<string>('')
@@ -16,6 +17,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
   const [priority, setPriority] = useState<PriorityValues>(1)
 
   const { setNewGoal } = useGoals()
+  const { createModalVisibility, switchTheCreateGoalModalState } = useModal()
 
   function clearInputs() {
     setGoalName('')
@@ -27,40 +29,28 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
   function createNewGoal(e: FormEvent) {
     e.preventDefault()
     setNewGoal({
-      id: new Date().getTime(),
+      id: uuidv4(),
       name: goalName,
       category: goalCategory,
       priority: priority,
       endHour: endHour,
       startHour: initialHour,
       status: 'pending',
-      createdAt: new Date()
+      createdAt: new Date(),
     })
 
     clearInputs()
-    turnTheModalState()
+    switchTheCreateGoalModalState()
   }
 
   return (
-    <div
-      className={`fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50 font-monts ${visibility}`}
-    >
-      <section className="py-8 px-5  flex flex-col gap-3 bg-stone-900 rounded-xl">
-        <header className="flex justify-between items-start">
-          <div>
-            <h1 className="font-">Criar nova tarefa</h1>
-            <p className="text-stone-400 text-sm">
-              Adicione uma nova tarefa à sua lista
-            </p>
-          </div>
-          <button
-            className="default-btn"
-            type="button"
-            onClick={turnTheModalState}
-          >
-            <img src={closeIcon} alt="" />
-          </button>
-        </header>
+    <ModalRoot visibility={createModalVisibility}>
+      <ModalHeader
+        title="Criar nova tarefa"
+        subtitle="Adicione uma nova task à sua lista"
+        onClick={switchTheCreateGoalModalState}
+      />
+      <ModalContent>
         <form className="flex flex-col gap-5">
           <fieldset className="flex gap-5 ">
             <div className="flex flex-col flex-2 justify-between">
@@ -78,7 +68,7 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
               <label htmlFor="">Categoria</label>
               <input
                 type="text"
-              value={goalCategory}
+                value={goalCategory}
                 name="category"
                 placeholder="Pessoal, Trabalho..."
                 onChange={(e) => setGoalCategory(e.target.value)}
@@ -125,16 +115,9 @@ export function NewGoalModal({ visibility, turnTheModalState }: ModalProps) {
               />
             </div>
           </fieldset>
-          <button
-            type="submit"
-            className="btn-main p-2 font-semibold rounded-md justify-center flex"
-            disabled={!goalName || !goalCategory || !priority}
-            onClick={createNewGoal}
-          >
-            Criar tarefa
-          </button>
         </form>
-      </section>
-    </div>
+      </ModalContent>
+      <ModalButton onClick={createNewGoal} />
+    </ModalRoot>
   )
 }
