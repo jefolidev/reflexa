@@ -16,7 +16,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
-  const { setGoalAsFinished } = useGoals()
+  const { setGoalAsFinished, removeCurrentGoal, goals } = useGoals()
   const { editModalVisibility, switchTheEditGoalModalState } = useModal()
 
   function setToolTipVisible(buttonId: string) {
@@ -35,6 +35,11 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
     setButtonHovered((prevButtonState) => !prevButtonState)
   }
 
+  function removeTask() {
+    const goalToRemove = goals.find((goal) => goal.id === taskId)
+    if (goalToRemove) removeCurrentGoal(goalToRemove)
+  }
+
   return (
     <div className="relative flex gap-4">
       <EditGoalModal
@@ -48,6 +53,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
       <button
         type="button"
         className="noStyleButton hover:brightness-[0.75]"
+        onClick={removeTask}
         onMouseEnter={() => setToolTipVisible('delete')}
         onMouseLeave={setToolTipInvisible}
       >

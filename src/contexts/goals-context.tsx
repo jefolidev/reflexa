@@ -29,6 +29,7 @@ interface GoalsContextProps {
   setNewGoal: (goals: GoalsProps) => void
   setGoalAsFinished: (id: string) => void
   editCurrentGoal: (editedGoal: GoalsProps[]) => void
+  removeCurrentGoal: (goalToRemove: GoalsProps) => void
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -119,12 +120,21 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     setGoals(updatedGoal)
   }
 
+  function removeCurrentGoal(goalToRemove: GoalsProps) {
+    const goalsWithoutCurrentGoal = goals.filter(
+      (goal) => goal.id !== goalToRemove.id
+    )
+
+    setGoals(goalsWithoutCurrentGoal)
+  }
+
   return (
     <GoalsContext.Provider
       value={{
         goals,
         setNewGoal,
         editCurrentGoal,
+        removeCurrentGoal,
         finishedGoals,
         setGoalAsFinished,
         totalGoals,

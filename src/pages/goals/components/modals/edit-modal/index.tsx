@@ -89,7 +89,7 @@ export function EditGoalModal({
             type="button"
             onClick={turnTheModalState}
           >
-            <img src={closeIcon} alt="" />
+          <img src={closeIcon} alt="" />
           </button>
         </header>
         <form className="flex flex-col gap-5" onSubmit={editGoal}>
