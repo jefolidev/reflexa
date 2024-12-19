@@ -28,6 +28,7 @@ interface GoalsContextProps {
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
   setGoalAsFinished: (id: string) => void
+  editCurrentGoal: (editedGoal: GoalsProps[]) => void
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -114,11 +115,16 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
+  function editCurrentGoal(updatedGoal: GoalsProps[]) {
+    setGoals(updatedGoal)
+  }
+
   return (
     <GoalsContext.Provider
       value={{
         goals,
         setNewGoal,
+        editCurrentGoal,
         finishedGoals,
         setGoalAsFinished,
         totalGoals,
