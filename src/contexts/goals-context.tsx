@@ -1,20 +1,21 @@
 import { type ReactNode, createContext, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import type { TaskStatusValues } from '../pages/goals/components/task-card/action'
-import type { PriorityValues } from '../pages/goals/components/task-card/priority'
+import { z } from 'zod'
 
-export interface GoalsProps {
-  id: string
-  name: string
-  category: string
-  startHour?: string
-  endHour?: string
-  priority: PriorityValues
-  status: TaskStatusValues
-  createdAt: Date
-  completedAt?: Date | null
-  expiredAt?: Date | null
-}
+const goalSchema = z.object({
+  id: z.string(),
+  taskName: z.string().min(1),
+  taskCategory: z.string().min(1),
+  taskInitialHour: z.string().optional(),
+  taskEndHour: z.string().optional(),
+  taskPriority: z.number().min(1).max(2),
+  taskStatus: z.enum(['pending', 'completed', 'unfinished']),
+  taskCreationDate: z.date(),
+  taskCompletedDate: z.date().optional(),
+  taskExpirationDate: z.date().optional(),
+})
+
+export type GoalsProps = z.infer<typeof goalSchema>
 
 interface GoalsProviderProps {
   children: ReactNode
@@ -38,57 +39,57 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   const [goals, setGoals] = useState<GoalsProps[]>([
     {
       id: uuidv4(),
-      name: 'Estudar Unidade I direito digital',
-      category: 'Faculdade',
-      startHour: '10',
-      endHour: '12',
-      priority: 1,
-      status: 'pending',
-      createdAt: new Date(),
+      taskName: 'Estudar Unidade I direito digital',
+      taskCategory: 'Faculdade',
+      taskInitialHour: '10',
+      taskEndHour: '12',
+      taskPriority: 1,
+      taskStatus: 'pending',
+      taskCreationDate: new Date(),
     },
   ])
 
   const [finishedGoals, setFinishedGoals] = useState<GoalsProps[]>([
     {
       id: uuidv4(),
-      name: 'Estudar Unidade IV de Banco de Dados',
-      category: 'Faculdade',
-      startHour: '10',
-      endHour: '12',
-      priority: 1,
-      status: 'completed',
-      createdAt: new Date(),
-      completedAt: new Date(),
+      taskName: 'Estudar Unidade IV de Banco de Dados',
+      taskCategory: 'Faculdade',
+      taskInitialHour: '10',
+      taskEndHour: '12',
+      taskPriority: 1,
+      taskStatus: 'completed',
+      taskCreationDate: new Date(),
+      taskCompletedDate: new Date(),
     },
   ])
 
   const totalGoals = goals.length
   const completedGoals = goals.filter((goal) => {
-    return goal.status === 'completed'
+    return goal.taskStatus === 'completed'
   })
 
   const highOrderGoals = goals.filter((goal) => {
-    return goal.priority === 5
+    return goal.taskPriority === 5
   })
 
   function setNewGoal({
-    name,
-    category,
-    priority,
-    startHour,
-    endHour,
+    taskName,
+    taskCategory,
+    taskPriority,
+    taskInitialHour,
+    taskEndHour,
   }: GoalsProps) {
     setGoals([
       ...goals,
       {
         id: uuidv4(),
-        name,
-        category,
-        priority,
-        startHour,
-        endHour,
-        status: 'pending',
-        createdAt: new Date(),
+        taskName,
+        taskCategory,
+        taskPriority,
+        taskInitialHour,
+        taskEndHour,
+        taskStatus: 'pending',
+        taskCreationDate: new Date(),
       },
     ])
   }
@@ -107,8 +108,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         ...finishedGoals,
         {
           ...goalToComplete,
-          completedAt: new Date(),
-          status: 'completed',
+          taskCompletedDate: new Date(),
+          taskStatus: 'completed',
         },
       ])
 

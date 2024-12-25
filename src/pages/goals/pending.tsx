@@ -1,6 +1,9 @@
 import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
-import { TaskPriority } from './components/task-card/priority'
+import {
+  type PriorityValues,
+  TaskPriority,
+} from './components/task-card/priority'
 
 export function PendingTasksPage() {
   const { goals, totalGoals, highOrderGoals, completedGoals } = useGoals()
@@ -22,13 +25,24 @@ export function PendingTasksPage() {
       </header>
       <main className="flex flex-col gap-3">
         {goals.map(
-          ({ id, name, category, priority, status, startHour, endHour }) => {
+          ({
+            id,
+            taskName,
+            taskCategory,
+            taskPriority,
+            taskStatus,
+            taskInitialHour,
+            taskEndHour,
+          }) => {
             return (
-              <TaskCard.Root key={name}>
-                <TaskCard.Header taskName={name} taskTag={category} />
-                <TaskCard.Hours startHour={startHour} endHour={endHour} />
-                <TaskPriority priorityLevel={priority} />
-                <TaskCard.Action status={status} taskId={id} />
+              <TaskCard.Root key={taskName}>
+                <TaskCard.Header taskName={taskName} taskTag={taskCategory} />
+                <TaskCard.Hours
+                  startHour={taskInitialHour}
+                  endHour={taskEndHour}
+                />
+                <TaskPriority priorityLevel={taskPriority as PriorityValues} />
+                <TaskCard.Action status={taskStatus} taskId={id} />
               </TaskCard.Root>
             )
           }

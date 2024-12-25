@@ -15,29 +15,29 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
   const goalToEdit = goals.find((goal) => goal.id === taskId)
 
   const [taskNameToEdit, setTaskNameToEdit] = useState<string>(
-    goalToEdit?.name || ''
+    goalToEdit?.taskName || ''
   )
   const [taskCategoryToEdit, setTaskCategoryToEdit] = useState<string>(
-    goalToEdit?.category || ''
+    goalToEdit?.taskCategory || ''
   )
   const [taskPriorityToEdit, setTaskPriorityToEdit] = useState<number>(
-    goalToEdit?.priority || 1
+    goalToEdit?.taskPriority || 1
   )
 
   const [taskInitialHourToEdit, setTaskInitialHourToEdit] = useState<string>(
-    goalToEdit?.startHour || ''
+    goalToEdit?.taskInitialHour || ''
   )
   const [taskEndHourToEdit, setTaskEndHourToEdit] = useState<string>(
-    goalToEdit?.endHour || ''
+    goalToEdit?.taskEndHour || ''
   )
 
   useEffect(() => {
     if (goalToEdit) {
-      setTaskNameToEdit(goalToEdit.name || '')
-      setTaskCategoryToEdit(goalToEdit.category || '')
-      setTaskPriorityToEdit(goalToEdit.priority || 1)
-      setTaskInitialHourToEdit(goalToEdit.startHour || '')
-      setTaskEndHourToEdit(goalToEdit.endHour || '')
+      setTaskNameToEdit(goalToEdit.taskName || '')
+      setTaskCategoryToEdit(goalToEdit.taskCategory || '')
+      setTaskPriorityToEdit(goalToEdit.taskPriority || 1)
+      setTaskInitialHourToEdit(goalToEdit.taskInitialHour || '')
+      setTaskEndHourToEdit(goalToEdit.taskEndHour || '')
     }
   }, [goalToEdit])
 
@@ -54,11 +54,11 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
         goal.id === goalToEdit.id
           ? {
               ...goalToEdit,
-              name: taskNameToEdit || goalToEdit.name,
-              category: taskCategoryToEdit || goalToEdit.category,
+              name: taskNameToEdit || goalToEdit.taskName,
+              category: taskCategoryToEdit || goalToEdit.taskCategory,
               priority: taskPriorityToEdit as PriorityValues,
-              startHour: taskInitialHourToEdit || goalToEdit.startHour,
-              endHour: taskEndHourToEdit || goalToEdit.endHour,
+              startHour: taskInitialHourToEdit || goalToEdit.taskInitialHour,
+              endHour: taskEndHourToEdit || goalToEdit.taskEndHour,
             }
           : goal
       )

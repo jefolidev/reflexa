@@ -15,7 +15,7 @@ export function UncompletedTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={5} />
-          <TaskCard.Action status="unfinished" />
+          <TaskCard.Action status="unfinished" taskId="" />
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
@@ -24,7 +24,7 @@ export function UncompletedTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={5} />
-          <TaskCard.Action status="unfinished" />
+          <TaskCard.Action status="unfinished" taskId="" />
         </TaskCard.Root>
       </WeeklyWrapperCard>
     </div>

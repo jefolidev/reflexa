@@ -16,7 +16,7 @@ export function OtherWeeksTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={1} />
-          <TaskCard.Action status="completed" />
+          <TaskCard.Action status="completed" taskId="" />
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
@@ -26,7 +26,7 @@ export function OtherWeeksTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={1} />
-          <TaskCard.Action status="completed" />
+          <TaskCard.Action status="completed" taskId="" />
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
@@ -36,7 +36,7 @@ export function OtherWeeksTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={1} />
-          <TaskCard.Action status="completed" />
+          <TaskCard.Action status="completed" taskId="" />
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
@@ -46,7 +46,7 @@ export function OtherWeeksTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={1} />
-          <TaskCard.Action status="completed" />
+          <TaskCard.Action status="completed" taskId="" />
         </TaskCard.Root>
         <TaskCard.Root>
           <TaskCard.Header
@@ -56,7 +56,7 @@ export function OtherWeeksTasksPage() {
           />
           <TaskCard.Hours />
           <TaskCard.Priority priorityLevel={2} />
-          <TaskCard.Action status="completed" />
+          <TaskCard.Action status="completed" taskId="" />
         </TaskCard.Root>
       </WeeklyWrapperCard>
     </div>
