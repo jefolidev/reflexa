@@ -61,6 +61,29 @@ h4 {
   }
 }
 
+.btn-success {
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  margin-top: 8px;
+
+  &:hover {
+    background-color: #dbdbdb;
+  }
+}
+
+.btn-error {
+  background-color: #76767600;
+
+  border: solid 2px rgba(255, 255, 255, 0.45);
+  border-radius: 5px;
+
+  margin-top: 8px;
+
+  &:hover {
+    background-color: rgba(87, 87, 87, 0.185);
+  }
+}
+
 .noStyleButton {
   background-color: transparent !important;
   margin: 0 0 !important;

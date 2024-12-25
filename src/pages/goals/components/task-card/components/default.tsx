@@ -5,6 +5,7 @@ import uncheckedIcon from '../../../assets/check-default.svg'
 import checkedIcon from '../../../assets/checked.svg'
 import editIcon from '../../../assets/edit.svg'
 import deleteIcon from '../../../assets/trash.svg'
+import { DeleteConfirmModal } from '../../modals/delete-confirm'
 import { EditGoalModal } from '../../modals/edit-modal'
 import { ToolTip } from './tooltip'
 
@@ -17,7 +18,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
   const { setGoalAsFinished, removeCurrentGoal, goals } = useGoals()
-  const { editModalVisibility, switchTheEditGoalModalState } = useModal()
+  const { isModalVisible, toggleModalState } = useModal()
 
   function setToolTipVisible(buttonId: string) {
     setActiveToolTip(buttonId)
@@ -35,25 +36,17 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
     setButtonHovered((prevButtonState) => !prevButtonState)
   }
 
-  function removeTask() {
-    const goalToRemove = goals.find((goal) => goal.id === taskId)
-    if (goalToRemove) removeCurrentGoal(goalToRemove)
-  }
-
   return (
     <div className="relative flex gap-4">
-      <EditGoalModal
-        visibility={editModalVisibility}
-        turnTheModalState={switchTheEditGoalModalState}
-        taskId={taskId}
-      />
+      {isModalVisible('editModal') && <EditGoalModal taskId={taskId} />}
+      {isModalVisible('deleteModal') && <DeleteConfirmModal taskId={taskId} />}
 
       <ToolTip text="Excluir" isVisible={activeToolTip === 'delete'} />
 
       <button
         type="button"
         className="noStyleButton hover:brightness-[0.75]"
-        onClick={removeTask}
+        onClick={() => toggleModalState('deleteModal')}
         onMouseEnter={() => setToolTipVisible('delete')}
         onMouseLeave={setToolTipInvisible}
       >
@@ -66,7 +59,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
         className="noStyleButton hover:brightness-[0.75]"
         onMouseEnter={() => setToolTipVisible('edit')}
         onMouseLeave={setToolTipInvisible}
-        onClick={switchTheEditGoalModalState}
+        onClick={() => toggleModalState('editModal')}
       >
         <img src={editIcon} alt="" />
       </button>

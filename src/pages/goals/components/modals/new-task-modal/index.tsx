@@ -17,7 +17,7 @@ export function NewGoalModal() {
   const [priority, setPriority] = useState<PriorityValues>(1)
 
   const { setNewGoal } = useGoals()
-  const { createModalVisibility, switchTheCreateGoalModalState } = useModal()
+  const { toggleModalState } = useModal()
 
   function clearInputs() {
     setGoalName('')
@@ -40,15 +40,15 @@ export function NewGoalModal() {
     })
 
     clearInputs()
-    switchTheCreateGoalModalState()
+    toggleModalState('createModal')
   }
 
   return (
-    <ModalRoot visibility={createModalVisibility}>
+    <ModalRoot >
       <ModalHeader
         title="Criar nova tarefa"
         subtitle="Adicione uma nova task à sua lista"
-        onClick={switchTheCreateGoalModalState}
+        modalName="createModal"
       />
       <ModalContent>
         <form className="flex flex-col gap-5">

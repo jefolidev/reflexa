@@ -15,20 +15,19 @@ import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
 */
 
 export function TasksLayout() {
-  const { isCreateGoalModalVisibile, switchTheCreateGoalModalState } =
-    useModal()
+  const { isModalVisible, toggleModalState } = useModal()
 
   return (
     <div className=" bg-zinc-800 w-screen h-screen flex-col p-12 relative">
       <button
         type="button"
         className="btn-default btn-secondary"
-        onClick={switchTheCreateGoalModalState}
+        onClick={() => toggleModalState('createModal')}
       >
         <img src={plus} alt="" />
       </button>
 
-      {isCreateGoalModalVisibile && <NewGoalModal />}
+      {isModalVisible('createModal') && <NewGoalModal />}
 
       <header className="mb-4">
         <span className="text-stone-500 text-sm font-poppins inline-flex gap-1">

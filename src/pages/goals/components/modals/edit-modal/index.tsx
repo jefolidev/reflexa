@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 import closeIcon from '../../../../../assets/common-assets/close.svg'
 import { useGoals } from '../../../../../hooks/useGoals'
+import { useModal } from '../../../../../hooks/useModal'
 import type { PriorityValues } from '../../task-card/priority'
 
 interface EditGoalModalProps {
-  visibility: string
   taskId: string
-  turnTheModalState: () => void
 }
 
-export function EditGoalModal({
-  turnTheModalState,
-  visibility,
-  taskId,
-}: EditGoalModalProps) {
+export function EditGoalModal({ taskId }: EditGoalModalProps) {
   const { goals, editCurrentGoal } = useGoals()
+  const { toggleModalState } = useModal()
 
   const goalToEdit = goals.find((goal) => goal.id === taskId)
 
@@ -68,14 +64,12 @@ export function EditGoalModal({
       )
 
       editCurrentGoal(updatedGoals)
-      turnTheModalState()
+      toggleModalState('editModal')
     }
   }
 
   return (
-    <div
-      className={`fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50 font-monts ${visibility}`}
-    >
+    <div className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50 font-monts">
       <section className="py-8 px-5  flex flex-col gap-3 bg-stone-900 rounded-xl">
         <header className="flex justify-between items-start">
           <div>
@@ -87,9 +81,9 @@ export function EditGoalModal({
           <button
             className="default-btn"
             type="button"
-            onClick={turnTheModalState}
+            onClick={() => toggleModalState('editModal')}
           >
-          <img src={closeIcon} alt="" />
+            <img src={closeIcon} alt="" />
           </button>
         </header>
         <form className="flex flex-col gap-5" onSubmit={editGoal}>
