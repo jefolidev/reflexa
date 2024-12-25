@@ -17,7 +17,7 @@ export function DefaultTag({ taskId }: DefaultTagProps) {
   const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
   const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
-  const { setGoalAsFinished, removeCurrentGoal, goals } = useGoals()
+  const { setGoalAsFinished } = useGoals()
   const { isModalVisible, toggleModalState } = useModal()
 
   function setToolTipVisible(buttonId: string) {
