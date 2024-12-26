@@ -30,7 +30,7 @@ interface GoalsContextProps {
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
   setGoalAsFinished: (id: string) => void
-  editCurrentGoal: (editedGoal: GoalsProps[]) => void
+  editCurrentGoal: (taskId: string, data: GoalsProps) => void
   removeCurrentGoal: (goalToRemove: GoalsProps) => void
 }
 
@@ -118,9 +118,29 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
-  function editCurrentGoal(updatedGoal: GoalsProps[]) {
-    
-    setGoals(updatedGoal)
+  function editCurrentGoal(taskId: string, data: GoalsProps) {
+    const goalToEdit = goals.find((goal) => goal.id === taskId)
+
+    if (goalToEdit) {
+      try {
+        const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
+          goal.id === goalToEdit.id
+            ? {
+                ...goalToEdit,
+                taskName: data.taskName,
+                taskCategory: data.taskCategory,
+                taskInitialHour: data.taskInitialHour,
+                taskEndHour: data.taskEndHour,
+                taskPriority: data.taskPriority,
+              }
+            : goal
+        )
+
+        setGoals(goalsAfterUpdate)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   function removeCurrentGoal(goalToRemove: GoalsProps) {
