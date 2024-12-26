@@ -119,6 +119,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   function editCurrentGoal(updatedGoal: GoalsProps[]) {
+    
     setGoals(updatedGoal)
   }
 

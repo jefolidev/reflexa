@@ -22,7 +22,7 @@ const newGoalSchema = z.object({
 })
 
 export function NewGoalModal() {
-  const { setNewGoal, goals } = useGoals()
+  const { setNewGoal } = useGoals()
   const { toggleModalState } = useModal()
   const { register, handleSubmit, watch } = useForm<GoalsProps>({
     resolver: zodResolver(newGoalSchema),
@@ -36,8 +36,6 @@ export function NewGoalModal() {
 
   function createNewGoal(data: GoalsProps) {
     try {
-      console.log(data, goals)
-
       setNewGoal(data)
       toggleModalState('createModal')
     } catch (err) {
