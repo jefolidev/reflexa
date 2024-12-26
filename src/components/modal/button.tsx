@@ -13,7 +13,7 @@ export function ModalButton({ variant = 'default', ...rest }: ModalButton) {
       {variant === 'default' ? (
         <button
           type="submit"
-          className="btn-main p-2 font-semibold rounded-md justify-center flex"
+          className="btn-main p-2 font-semibold rounded-md justify-center flex disabled:bg-[#e5e5e5] disabled:cursor-not-allowed "
           {...rest}
         >
           Criar tarefa

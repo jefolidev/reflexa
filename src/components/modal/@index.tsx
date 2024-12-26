@@ -5,37 +5,37 @@ import { ModalHeader } from './header'
 import { ModalRoot } from './root'
 
 interface ModalProps {
-  title: string
-  subtitle: string
-  children: ReactNode
-  disabled: boolean
-  modalAction: () => void
+	title: string
+	subtitle: string
+	children: ReactNode
+	disabled: boolean
+	modalAction: () => void
 }
 
 export function Modal({
-  title,
-  subtitle,
-  children,
-  disabled,
-  modalAction,
+	title,
+	subtitle,
+	children,
+	disabled,
+	modalAction,
 }: ModalProps) {
-  const [isVisible, setIsVisible] = useState<boolean>(false)
+	const [isVisible, setIsVisible] = useState<boolean>(false)
 
-  const modalVisibility = isVisible ? 'visible' : 'invisible'
+	const modalVisibility = isVisible ? 'visible' : 'invisible'
 
-  function turnTheModalState() {
-    setIsVisible((prevVisibility) => !prevVisibility)
-  }
+	function turnTheModalState() {
+		setIsVisible((prevVisibility) => !prevVisibility)
+	}
 
-  return (
-    <ModalRoot visibility={modalVisibility}>
-      <ModalHeader
-        title={title}
-        subtitle={subtitle}
-        onClick={turnTheModalState}
-      />
-      <ModalContent>{children}</ModalContent>
-      <ModalButton disabled={disabled} onClick={modalAction} />
-    </ModalRoot>
-  )
+	return (
+		<ModalRoot visibility={modalVisibility}>
+			<ModalHeader
+				title={title}
+				subtitle={subtitle}
+				onClick={turnTheModalState}
+			/>
+			<ModalContent>{children}</ModalContent>
+			<ModalButton disabled={disabled} onClick={modalAction} />
+		</ModalRoot>
+	)
 }

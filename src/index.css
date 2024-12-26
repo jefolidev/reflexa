@@ -6,119 +6,119 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 700;
-  color: #fff;
-  font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	color: #fff;
+	font-family: "Montserrat", sans-serif;
 }
 
 h1 {
-  font-size: 2rem;
+	font-size: 2rem;
 }
 
 h2 {
-  font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 h3 {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 h4 {
-  font-size: 0.925rem;
+	font-size: 0.925rem;
 }
 
 .btn-default {
-  border-radius: 99999px;
+	border-radius: 99999px;
 
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	padding: 0.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .btn-secondary {
-  background-color: #fff;
-  position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+	background-color: #fff;
+	position: absolute;
+	bottom: 3rem;
+	right: 3rem;
 
-  padding: 0.875rem;
+	padding: 0.875rem;
 
-  &:hover {
-    background-color: #e2e2e2;
-  }
+	&:hover {
+		background-color: #e2e2e2;
+	}
 }
 
 .btn-main {
-  background-color: white;
-  color: #0d0d0d;
+	background-color: white;
+	color: #0d0d0d;
 
-  min-width: 1rem;
-  min-height: 1rem;
+	min-width: 1rem;
+	min-height: 1rem;
 
-  &:hover {
-    background-color: rgb(229, 229, 229);
-  }
+	&:hover {
+		background-color: #e5e5e5;
+	}
 }
 
 .btn-success {
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  margin-top: 8px;
+	background-color: #f2f2f2;
+	border-radius: 5px;
+	margin-top: 8px;
 
-  &:hover {
-    background-color: #dbdbdb;
-  }
+	&:hover {
+		background-color: #dbdbdb;
+	}
 }
 
 .btn-error {
-  background-color: #76767600;
+	background-color: #76767600;
 
-  border: solid 2px rgba(255, 255, 255, 0.45);
-  border-radius: 5px;
+	border: solid 2px rgba(255, 255, 255, 0.45);
+	border-radius: 5px;
 
-  margin-top: 8px;
+	margin-top: 8px;
 
-  &:hover {
-    background-color: rgba(87, 87, 87, 0.185);
-  }
+	&:hover {
+		background-color: rgba(87, 87, 87, 0.185);
+	}
 }
 
 .noStyleButton {
-  background-color: transparent !important;
-  margin: 0 0 !important;
-  padding: 0 !important;
+	background-color: transparent !important;
+	margin: 0 0 !important;
+	padding: 0 !important;
 }
 
 button:disabled {
-  opacity: 0.5;
+	opacity: 0.5;
 
-  &:hover {
-    opacity: 0.5;
-    background-color: white;
-    cursor: not-allowed;
-  }
+	&:hover {
+		opacity: 0.5;
+		background-color: white;
+		cursor: not-allowed;
+	}
 }
 
 label {
-  color: white;
+	color: white;
 }
 
 fieldset > div {
-  gap: 0.5rem;
+	gap: 0.5rem;
 }
 
 input {
-  all: unset;
-  padding: 0.5rem 1rem;
-  color: #fff;
-  border-radius: 0.3125rem;
-  background-color: #292524;
-  font-size: 0.875rem;
+	all: unset;
+	padding: 0.5rem 1rem;
+	color: #fff;
+	border-radius: 0.3125rem;
+	background-color: #292524;
+	font-size: 0.875rem;
 
-  &:focus,
-  &:target {
-    border: none;
-    outline: none;
-  }
+	&:focus,
+	&:target {
+		border: none;
+		outline: none;
+	}
 }

@@ -1,6 +1,5 @@
 import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
-import type { PriorityValues } from './components/task-card/priority'
 import { WeeklyWrapperCard } from './components/wrapper-card'
 
 export function CompletedTasksPage() {
@@ -25,9 +24,7 @@ export function CompletedTasksPage() {
                   taskName={taskName}
                   taskTag={taskCategory}
                 />
-                <TaskCard.Priority
-                  priorityLevel={taskPriority as PriorityValues}
-                />
+                <TaskCard.Priority priorityLevel={taskPriority} />
                 <TaskCard.Action status={taskStatus} taskId={id} />
               </TaskCard.Root>
             )

@@ -1,14 +1,15 @@
 import { type ReactNode, createContext, useState } from 'react'
+
 import { v4 as uuidv4 } from 'uuid'
 import { z } from 'zod'
 
 const goalSchema = z.object({
   id: z.string(),
-  taskName: z.string().min(1),
-  taskCategory: z.string().min(1),
-  taskInitialHour: z.string().optional(),
-  taskEndHour: z.string().optional(),
-  taskPriority: z.number().min(1).max(2),
+  taskName: z.string().min(1, 'Insira algum nome para a tarefa.'),
+  taskCategory: z.string().min(1, 'Adicione alguma categoria para sua tarefa.'),
+  taskInitialHour: z.number().min(0).max(23).optional(),
+  taskEndHour: z.number().min(0).max(23).optional(),
+  taskPriority: z.number().min(1).max(5),
   taskStatus: z.enum(['pending', 'completed', 'unfinished']),
   taskCreationDate: z.date(),
   taskCompletedDate: z.date().optional(),
@@ -41,8 +42,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
       id: uuidv4(),
       taskName: 'Estudar Unidade I direito digital',
       taskCategory: 'Faculdade',
-      taskInitialHour: '10',
-      taskEndHour: '12',
+      taskInitialHour: 10,
+      taskEndHour: 12,
       taskPriority: 1,
       taskStatus: 'pending',
       taskCreationDate: new Date(),
@@ -54,8 +55,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
       id: uuidv4(),
       taskName: 'Estudar Unidade IV de Banco de Dados',
       taskCategory: 'Faculdade',
-      taskInitialHour: '10',
-      taskEndHour: '12',
+      taskInitialHour: 10,
+      taskEndHour: 12,
       taskPriority: 1,
       taskStatus: 'completed',
       taskCreationDate: new Date(),

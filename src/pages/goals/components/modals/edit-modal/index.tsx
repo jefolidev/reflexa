@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import closeIcon from '../../../../../assets/common-assets/close.svg'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
-import type { PriorityValues } from '../../task-card/priority'
 
 interface EditGoalModalProps {
   taskId: string
@@ -24,11 +23,11 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
     goalToEdit?.taskPriority || 1
   )
 
-  const [taskInitialHourToEdit, setTaskInitialHourToEdit] = useState<string>(
-    goalToEdit?.taskInitialHour || ''
+  const [taskInitialHourToEdit, setTaskInitialHourToEdit] = useState<number>(
+    goalToEdit?.taskInitialHour || 1
   )
-  const [taskEndHourToEdit, setTaskEndHourToEdit] = useState<string>(
-    goalToEdit?.taskEndHour || ''
+  const [taskEndHourToEdit, setTaskEndHourToEdit] = useState<number>(
+    goalToEdit?.taskEndHour || 1
   )
 
   useEffect(() => {
@@ -36,8 +35,8 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
       setTaskNameToEdit(goalToEdit.taskName || '')
       setTaskCategoryToEdit(goalToEdit.taskCategory || '')
       setTaskPriorityToEdit(goalToEdit.taskPriority || 1)
-      setTaskInitialHourToEdit(goalToEdit.taskInitialHour || '')
-      setTaskEndHourToEdit(goalToEdit.taskEndHour || '')
+      setTaskInitialHourToEdit(goalToEdit.taskInitialHour || 1)
+      setTaskEndHourToEdit(goalToEdit.taskEndHour || 1)
     }
   }, [goalToEdit])
 
@@ -56,7 +55,7 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
               ...goalToEdit,
               name: taskNameToEdit || goalToEdit.taskName,
               category: taskCategoryToEdit || goalToEdit.taskCategory,
-              priority: taskPriorityToEdit as PriorityValues,
+              priority: taskPriorityToEdit,
               startHour: taskInitialHourToEdit || goalToEdit.taskInitialHour,
               endHour: taskEndHourToEdit || goalToEdit.taskEndHour,
             }
@@ -116,7 +115,9 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
                 type="number"
                 value={taskInitialHourToEdit}
                 className="flex-1"
-                onChange={(e) => setTaskInitialHourToEdit(e.target.value)}
+                onChange={(e) =>
+                  setTaskInitialHourToEdit(Number(e.target.value))
+                }
                 required
               />
             </div>
@@ -126,7 +127,7 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
                 type="number"
                 value={taskEndHourToEdit}
                 className="flex-1"
-                onChange={(e) => setTaskEndHourToEdit(e.target.value)}
+                onChange={(e) => setTaskEndHourToEdit(Number(e.target.value))}
                 required
               />
             </div>

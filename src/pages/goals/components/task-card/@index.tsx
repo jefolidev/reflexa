@@ -5,9 +5,9 @@ import { TaskRoot } from './root'
 import { TaskTime } from './time'
 
 export const TaskCard = {
-  Root: TaskRoot,
-  Header: TaskHeader,
-  Hours: TaskTime,
-  Priority: TaskPriority,
-  Action: TaskAction,
+	Root: TaskRoot,
+	Header: TaskHeader,
+	Hours: TaskTime,
+	Priority: TaskPriority,
+	Action: TaskAction,
 }

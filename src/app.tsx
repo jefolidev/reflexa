@@ -4,13 +4,13 @@ import { ModalProvider } from './contexts/modal-context'
 import { Router } from './routes/route'
 
 export function App() {
-  return (
-    <BrowserRouter>
-      <GoalsProvider>
-        <ModalProvider>
-          <Router />
-        </ModalProvider>
-      </GoalsProvider>
-    </BrowserRouter>
-  )
+	return (
+		<BrowserRouter>
+			<GoalsProvider>
+				<ModalProvider>
+					<Router />
+				</ModalProvider>
+			</GoalsProvider>
+		</BrowserRouter>
+	)
 }

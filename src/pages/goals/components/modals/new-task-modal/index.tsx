@@ -1,78 +1,75 @@
-import { v4 as uuidv4 } from 'uuid'
-
-import { type FormEvent, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import { ModalButton } from '../../../../../components/modal/button'
 import { ModalContent } from '../../../../../components/modal/content'
 import { ModalHeader } from '../../../../../components/modal/header'
 import { ModalRoot } from '../../../../../components/modal/root'
+import type { GoalsProps } from '../../../../../contexts/goals-context'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
-import type { PriorityValues } from '../../task-card/priority'
+
+const newGoalSchema = z.object({
+  taskName: z.string().min(1, 'Insira algum nome para a tarefa.'),
+  taskCategory: z.string().min(1, 'Adicione alguma categoria para sua tarefa.'),
+  taskInitialHour: z
+    .string()
+    .min(0, 'A hora inicial deve ser no mínimo 0.')
+    .max(23, 'A hora inicial deve ser no máximo 23.')
+    .optional(),
+  taskEndHour: z.string().min(0).max(23).optional(),
+  taskPriority: z.number().min(1).max(5),
+})
 
 export function NewGoalModal() {
-  const [goalName, setGoalName] = useState<string>('')
-  const [goalCategory, setGoalCategory] = useState<string>('')
-  const [initialHour, setInitialHour] = useState<string>('')
-  const [endHour, setEndHour] = useState<string>('')
-  const [priority, setPriority] = useState<PriorityValues>(1)
-
-  const { setNewGoal } = useGoals()
+  const { setNewGoal, goals } = useGoals()
   const { toggleModalState } = useModal()
+  const { register, handleSubmit, watch } = useForm<GoalsProps>({
+    resolver: zodResolver(newGoalSchema),
+  })
 
-  function clearInputs() {
-    setGoalName('')
-    setGoalCategory('')
-    setInitialHour('')
-    setEndHour('')
-  }
+  const nameInput = watch('taskName')
+  const categoryInput = watch('taskCategory')
+  const priorityInput = watch('taskPriority')
 
-  function createNewGoal(e: FormEvent) {
-    e.preventDefault()
-    setNewGoal({
-      id: uuidv4(),
-      name: goalName,
-      category: goalCategory,
-      priority: priority,
-      endHour: endHour,
-      startHour: initialHour,
-      status: 'pending',
-      createdAt: new Date(),
-    })
+  const isSubmitDisabled = !nameInput || !categoryInput || !priorityInput
 
-    clearInputs()
-    toggleModalState('createModal')
+  function createNewGoal(data: GoalsProps) {
+    try {
+      console.log(data, goals)
+
+      setNewGoal(data)
+      toggleModalState('createModal')
+    } catch (err) {
+      console.error('Erro ao criar nova meta:', err)
+    }
   }
 
   return (
-    <ModalRoot >
+    <ModalRoot>
       <ModalHeader
         title="Criar nova tarefa"
         subtitle="Adicione uma nova task à sua lista"
         modalName="createModal"
       />
       <ModalContent>
-        <form className="flex flex-col gap-5">
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(createNewGoal)}
+        >
           <fieldset className="flex gap-5 ">
             <div className="flex flex-col flex-2 justify-between">
               <label htmlFor="">Nome da tarefa</label>
               <input
-                type="text"
-                value={goalName}
-                name="name"
                 placeholder="Tarefa 1"
-                onChange={(e) => setGoalName(e.target.value)}
-                required
+                {...register('taskName', { required: true })}
               />
             </div>
             <div className="flex flex-col flex-2 justify-between">
               <label htmlFor="">Categoria</label>
               <input
-                type="text"
-                value={goalCategory}
-                name="category"
                 placeholder="Pessoal, Trabalho..."
-                onChange={(e) => setGoalCategory(e.target.value)}
-                required
+                {...register('taskCategory', { required: true })}
               />
             </div>
           </fieldset>
@@ -81,43 +78,39 @@ export function NewGoalModal() {
               <label htmlFor="">Hora inicial</label>
               <input
                 type="number"
-                value={initialHour}
-                name="initialHour"
                 className="flex-1"
-                onChange={(e) => setInitialHour(e.target.value)}
-                required
+                {...register('taskInitialHour', {
+                  max: 23,
+                })}
               />
             </div>
             <div className="flex flex-col">
               <label htmlFor="">Hora final</label>
               <input
                 type="number"
-                value={endHour}
-                name="endHour"
                 className="flex-1"
-                onChange={(e) => setEndHour(e.target.value)}
-                required
+                {...register('taskEndHour', {
+                  max: 23,
+                })}
               />
             </div>
             <div className="flex flex-col  ">
               <label htmlFor="">Prioridade</label>
               <input
                 type="number"
-                value={priority}
-                name="priority"
                 placeholder="4"
                 min={1}
                 max={5}
-                onChange={(e) =>
-                  setPriority(Number(e.target.value) as PriorityValues)
-                }
-                required
+                {...register('taskPriority', {
+                  valueAsNumber: true,
+                  required: true,
+                })}
               />
             </div>
           </fieldset>
+          <ModalButton type="submit" disabled={isSubmitDisabled} />
         </form>
       </ModalContent>
-      <ModalButton onClick={createNewGoal} />
     </ModalRoot>
   )
 }

@@ -1,9 +1,6 @@
 import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
-import {
-  type PriorityValues,
-  TaskPriority,
-} from './components/task-card/priority'
+import { TaskPriority } from './components/task-card/priority'
 
 export function PendingTasksPage() {
   const { goals, totalGoals, highOrderGoals, completedGoals } = useGoals()
@@ -41,7 +38,7 @@ export function PendingTasksPage() {
                   startHour={taskInitialHour}
                   endHour={taskEndHour}
                 />
-                <TaskPriority priorityLevel={taskPriority as PriorityValues} />
+                <TaskPriority priorityLevel={taskPriority} />
                 <TaskCard.Action status={taskStatus} taskId={id} />
               </TaskCard.Root>
             )
