@@ -6,14 +6,12 @@ import happyIcon from '../../../../assets/emojis-priority/happy.svg'
 import neutralIcon from '../../../../assets/emojis-priority/neutral.svg'
 import unhappyIcon from '../../../../assets/emojis-priority/unhappy.svg'
 
-type PriorityValues = 1 | 2 | 3 | 4 | 5
-
 interface SimpleTaskCardProps {
-  priorityLevel: PriorityValues
+  priorityLevel: number
 }
 
 export function SimpleTaskCard({ priorityLevel }: SimpleTaskCardProps) {
-  const priorityStyles: Record<PriorityValues, string> = {
+  const priorityStyles: Record<number, string> = {
     1: 'bg-red-800/60 text-red-400',
     2: 'bg-red-800/60 text-red-300',
     3: 'bg-yellow-600/60 text-yellow-300',
@@ -22,7 +20,7 @@ export function SimpleTaskCard({ priorityLevel }: SimpleTaskCardProps) {
   }
 
   const styles = priorityStyles[priorityLevel]
-  const emojisBasedOnPriority: Record<PriorityValues, string> = {
+  const emojisBasedOnPriority: Record<number, string> = {
     5: excitedIcon,
     4: happyIcon,
     3: neutralIcon,

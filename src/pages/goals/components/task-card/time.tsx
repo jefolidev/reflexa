@@ -1,20 +1,27 @@
 interface TaskHoursProps {
-  startHour?: string
-  endHour?: string
+  startHour?: number
+  endHour?: number
 }
 
 export function TaskTime({ startHour, endHour }: TaskHoursProps) {
+  function addZeroBeforeNumber(number: number) {
+    if (number <= 9) {
+      const fixedNumber = `0${number}`
+      return fixedNumber
+    }
+    return number
+  }
   return (
     <div className="flex gap-1 text-white font-monts font-medium text-lg">
-      {startHour !== null || endHour !== null ? (
+      {Number.isNaN(startHour) || Number.isNaN(endHour) ? (
         <>
-          <span>{startHour}h</span>
-          <span>-</span>
-          <span>{endHour}h</span>
+          <span>{''}</span>
         </>
       ) : (
         <>
-          <span>{''}</span>
+          <span>{addZeroBeforeNumber(startHour!)}h</span>
+          <span>-</span>
+          <span>{addZeroBeforeNumber(endHour!)}h</span>
         </>
       )}
     </div>

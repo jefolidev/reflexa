@@ -8,17 +8,17 @@ import { PendingTasksPage } from '../pages/goals/pending'
 import { UncompletedTasksPage } from '../pages/goals/uncompleted'
 
 export function Router() {
-  return (
-    <Routes>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/tasks" element={<TasksLayout />}>
-          <Route path="pending" element={<PendingTasksPage />} />
-          <Route path="uncompleted" element={<UncompletedTasksPage />} />
-          <Route path="completed" element={<CompletedTasksPage />} />
-          <Route path="other-weeks" element={<OtherWeeksTasksPage />} />
-        </Route>
-      </Route>
-    </Routes>
-  )
+	return (
+		<Routes>
+			<Route path="/" element={<DefaultLayout />}>
+				<Route path="/" element={<DashboardPage />} />
+				<Route path="/tasks" element={<TasksLayout />}>
+					<Route path="pending" element={<PendingTasksPage />} />
+					<Route path="uncompleted" element={<UncompletedTasksPage />} />
+					<Route path="completed" element={<CompletedTasksPage />} />
+					<Route path="other-weeks" element={<OtherWeeksTasksPage />} />
+				</Route>
+			</Route>
+		</Routes>
+	)
 }
