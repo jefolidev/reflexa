@@ -1,3 +1,4 @@
+import type { ActionTypesProps } from '../../@types/goals-actions'
 import type { GoalsProps } from './reducers'
 
 export enum ActionTypes {
@@ -7,7 +8,7 @@ export enum ActionTypes {
   REMOVE_GOAL = 'REMOVE_GOAL',
 }
 
-export function addNewGoalAction(goalData: GoalsProps) {
+export function addNewGoalAction(goalData: GoalsProps): ActionTypesProps {
   return {
     type: ActionTypes.ADD_NEW_GOAL,
     payload: { goalData },
@@ -16,19 +17,23 @@ export function addNewGoalAction(goalData: GoalsProps) {
 
 export function setGoalAsFinishedAction(
   finishedTask: GoalsProps,
-  goalsWithoutCurrentCompletedGoal: GoalsProps
-) {
+  goalsWithoutCurrentCompletedGoal: GoalsProps[]
+): ActionTypesProps {
   return {
     type: ActionTypes.SET_GOALS_AS_COMPLETE,
     payload: { finishedTask, goalsWithoutCurrentCompletedGoal },
   }
 }
 
-export function editOrderAction(goalsAfterUpdate: GoalsProps) {
+export function editOrderAction(
+  goalsAfterUpdate: GoalsProps[]
+): ActionTypesProps {
   return { type: ActionTypes.EDIT_GOAL, payload: { goalsAfterUpdate } }
 }
 
-export function removeGoalAction(goalsWithoutCurrentGoal: GoalsProps) {
+export function removeGoalAction(
+  goalsWithoutCurrentGoal: GoalsProps[]
+): ActionTypesProps {
   return {
     type: ActionTypes.REMOVE_GOAL,
     payload: { goalsWithoutCurrentGoal },

@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import type { ActionTypesProps } from '../../@types/goals-actions'
+import { ActionTypes } from './actions'
 
 const goalSchema = z.object({
   id: z.string(),
@@ -20,28 +22,28 @@ interface GoalsState {
   finishedGoals: GoalsProps[]
 }
 
-export function goalsReducer(state: GoalsState, action: any) {
+export function goalsReducer(state: GoalsState, action: ActionTypesProps) {
   switch (action.type) {
-    case 'ADD_NEW_GOAL':
+    case ActionTypes.ADD_NEW_GOAL:
       return {
         ...state,
         goals: [...state.goals, action.payload.goalData],
       }
 
-    case 'SET_GOALS_AS_COMPLETE':
+    case ActionTypes.SET_GOALS_AS_COMPLETE:
       return {
         ...state,
         goals: action.payload.goalsWithoutCurrentCompletedGoal,
         finishedGoals: [...state.finishedGoals, action.payload.finishedTask],
       }
 
-    case 'EDIT_GOAL':
+    case ActionTypes.EDIT_GOAL:
       return {
         ...state,
         goals: action.payload.goalsAfterUpdate,
       }
 
-    case 'REMOVE_GOAL':
+    case ActionTypes.REMOVE_GOAL:
       return {
         ...state,
         goals: action.payload.goalsWithoutCurrentGoal,
