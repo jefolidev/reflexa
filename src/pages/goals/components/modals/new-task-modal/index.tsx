@@ -34,7 +34,7 @@ export function NewGoalModal() {
 
   const isSubmitDisabled = !nameInput || !categoryInput || !priorityInput
 
-  function createNewGoal(data: GoalsProps) {
+  function handleNewGoalSubmission(data: GoalsProps) {
     try {
       setNewGoal(data)
       toggleModalState('createModal')
@@ -53,7 +53,7 @@ export function NewGoalModal() {
       <ModalContent>
         <form
           className="flex flex-col gap-5"
-          onSubmit={handleSubmit(createNewGoal)}
+          onSubmit={handleSubmit(handleNewGoalSubmission)}
         >
           <fieldset className="flex gap-5 ">
             <div className="flex flex-col flex-2 justify-between">
