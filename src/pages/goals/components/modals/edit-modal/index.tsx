@@ -47,25 +47,10 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
     },
   })
 
-  function editGoal(data: GoalsProps) {
+  function handleEditGoalSubmission(data: GoalsProps) {
     try {
-      if (goalToEdit) {
-        const updatedGoals = goals.map((goal) =>
-          goal.id === goalToEdit.id
-            ? {
-                ...goalToEdit,
-                taskName: data.taskName,
-                taskCategory: data.taskCategory,
-                taskInitialHour: data.taskInitialHour,
-                taskEndHour: data.taskEndHour,
-                taskPriority: data.taskPriority,
-              }
-            : goal
-        )
-
-        editCurrentGoal(updatedGoals)
-        toggleModalState('editModal')
-      }
+      editCurrentGoal(taskId, data)
+      toggleModalState('editModal')
     } catch (err) {
       console.error(err)
     }
@@ -78,7 +63,10 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
         modalName="editModal"
       />
       <ModalContent>
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit(editGoal)}>
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(handleEditGoalSubmission)}
+        >
           <fieldset className="flex gap-5 ">
             <div className="flex flex-col flex-2 justify-between">
               <label htmlFor="">Nome da tarefa</label>
@@ -119,7 +107,10 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
                 placeholder="4"
                 min={1}
                 max={5}
-                {...register('taskPriority', { required: true })}
+                {...register('taskPriority', {
+                  required: true,
+                  valueAsNumber: true,
+                })}
               />
             </div>
           </fieldset>
