@@ -1,27 +1,21 @@
-import { type ReactNode, createContext, useState } from 'react'
+import { type ReactNode, createContext, useReducer } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
-import { z } from 'zod'
+import type { TaskStatusValues } from '../pages/goals/components/task-card/action'
+import {
+  addNewGoalAction,
+  editOrderAction,
+  removeGoalAction,
+  setGoalAsFinishedAction,
+} from '../reducers/goals/actions'
+import { type GoalsProps, goalsReducer } from '../reducers/goals/reducers'
 
-const goalSchema = z.object({
-  id: z.string(),
-  taskName: z.string().min(1, 'Insira algum nome para a tarefa.'),
-  taskCategory: z.string().min(1, 'Adicione alguma categoria para sua tarefa.'),
-  taskInitialHour: z.number().min(0).max(23).optional(),
-  taskEndHour: z.number().min(0).max(23).optional(),
-  taskPriority: z.number().min(1).max(5),
-  taskStatus: z.enum(['pending', 'completed', 'unfinished']),
-  taskCreationDate: z.date(),
-  taskCompletedDate: z.date().optional(),
-  taskExpirationDate: z.date().optional(),
-})
-
-export type GoalsProps = z.infer<typeof goalSchema>
-
+/* TODO 
+  ! Os horários não aparecem na tela de tasks concluídas
+*/
 interface GoalsProviderProps {
   children: ReactNode
 }
-
 interface GoalsContextProps {
   goals: GoalsProps[]
   finishedGoals: GoalsProps[]
@@ -37,39 +31,19 @@ interface GoalsContextProps {
 export const GoalsContext = createContext({} as GoalsContextProps)
 
 export function GoalsProvider({ children }: GoalsProviderProps) {
-  const [goals, setGoals] = useState<GoalsProps[]>([
-    {
-      id: uuidv4(),
-      taskName: 'Estudar Unidade I direito digital',
-      taskCategory: 'Faculdade',
-      taskInitialHour: 10,
-      taskEndHour: 12,
-      taskPriority: 1,
-      taskStatus: 'pending',
-      taskCreationDate: new Date(),
-    },
-  ])
+  const [goalsState, dispatch] = useReducer(goalsReducer, {
+    goals: [],
+    finishedGoals: [],
+  })
 
-  const [finishedGoals, setFinishedGoals] = useState<GoalsProps[]>([
-    {
-      id: uuidv4(),
-      taskName: 'Estudar Unidade IV de Banco de Dados',
-      taskCategory: 'Faculdade',
-      taskInitialHour: 10,
-      taskEndHour: 12,
-      taskPriority: 1,
-      taskStatus: 'completed',
-      taskCreationDate: new Date(),
-      taskCompletedDate: new Date(),
-    },
-  ])
+  const { goals, finishedGoals } = goalsState
 
   const totalGoals = goals.length
-  const completedGoals = goals.filter((goal) => {
+  const completedGoals = goals.filter((goal: GoalsProps) => {
     return goal.taskStatus === 'completed'
   })
 
-  const highOrderGoals = goals.filter((goal) => {
+  const highOrderGoals = goals.filter((goal: GoalsProps) => {
     return goal.taskPriority === 5
   })
 
@@ -80,75 +54,64 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     taskInitialHour,
     taskEndHour,
   }: GoalsProps) {
-    setGoals([
-      ...goals,
-      {
-        id: uuidv4(),
-        taskName,
-        taskCategory,
-        taskPriority,
-        taskInitialHour,
-        taskEndHour,
-        taskStatus: 'pending',
-        taskCreationDate: new Date(),
-      },
-    ])
+    const goalData = {
+      id: uuidv4(),
+      taskName,
+      taskCategory,
+      taskPriority,
+      taskInitialHour,
+      taskEndHour,
+      taskStatus: 'pending' as TaskStatusValues,
+      taskCreationDate: new Date(),
+    }
+
+    dispatch(addNewGoalAction(goalData))
   }
 
   function setGoalAsFinished(id: string) {
-    const goalToComplete = goals.find((goal) => goal.id === id)
+    const goalToComplete = goals.find((goal: GoalsProps) => goal.id === id)
 
-    const goalsWithoutCurrentCompletedGoal = goals.filter((goal) => {
-      if (goalToComplete) {
-        return goal.id !== goalToComplete.id
-      }
-    })
+    if (!goalToComplete) return
+
+    const goalsWithoutCurrentCompletedGoal = goals.filter(
+      (goal: GoalsProps) => goal.id !== goalToComplete?.id
+    )
+
+    const finishedTask = {
+      ...goalToComplete,
+      taskCompletedDate: new Date(),
+      taskStatus: 'completed',
+    }
 
     if (goalToComplete) {
-      setFinishedGoals([
-        ...finishedGoals,
-        {
-          ...goalToComplete,
-          taskCompletedDate: new Date(),
-          taskStatus: 'completed',
-        },
-      ])
-
-      setGoals(goalsWithoutCurrentCompletedGoal)
+      dispatch(
+        setGoalAsFinishedAction(finishedTask, goalsWithoutCurrentCompletedGoal)
+      )
     }
   }
 
   function editCurrentGoal(taskId: string, data: GoalsProps) {
-    const goalToEdit = goals.find((goal) => goal.id === taskId)
-
-    if (goalToEdit) {
-      try {
-        const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
-          goal.id === goalToEdit.id
-            ? {
-                ...goalToEdit,
-                taskName: data.taskName,
-                taskCategory: data.taskCategory,
-                taskInitialHour: data.taskInitialHour,
-                taskEndHour: data.taskEndHour,
-                taskPriority: data.taskPriority,
-              }
-            : goal
-        )
-
-        setGoals(goalsAfterUpdate)
-      } catch (error) {
-        console.error(error)
-      }
+    try {
+      const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
+        goal.id === taskId
+          ? {
+              ...goal,
+              ...data,
+            }
+          : goal
+      )
+      dispatch(editOrderAction(goalsAfterUpdate))
+    } catch (error) {
+      console.error(error)
     }
   }
 
   function removeCurrentGoal(goalToRemove: GoalsProps) {
     const goalsWithoutCurrentGoal = goals.filter(
-      (goal) => goal.id !== goalToRemove.id
+      (goal: GoalsProps) => goal.id !== goalToRemove.id
     )
 
-    setGoals(goalsWithoutCurrentGoal)
+    dispatch(removeGoalAction(goalsWithoutCurrentGoal))
   }
 
   return (
