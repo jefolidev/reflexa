@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { NoTasks } from '../../components/no-tasks'
 import { useDate } from '../../hooks/useDate'
 import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
@@ -31,31 +32,35 @@ export function PendingTasksPage() {
           </span>
         </div>
       </header>
-      <main className="flex flex-col gap-3">
-        {goals.map(
-          ({
-            id,
-            taskName,
-            taskCategory,
-            taskPriority,
-            taskStatus,
-            taskInitialHour,
-            taskEndHour,
-          }) => {
-            return (
-              <TaskCard.Root key={taskName}>
-                <TaskCard.Header taskName={taskName} taskTag={taskCategory} />
-                <TaskCard.Hours
-                  startHour={taskInitialHour}
-                  endHour={taskEndHour}
-                />
-                <TaskPriority priorityLevel={taskPriority} />
-                <TaskCard.Action status={taskStatus} taskId={id} />
-              </TaskCard.Root>
-            )
-          }
-        )}
-      </main>
+      {totalGoals === 0 ? (
+        <NoTasks />
+      ) : (
+        <main className="flex flex-col gap-3">
+          {goals.map(
+            ({
+              id,
+              taskName,
+              taskCategory,
+              taskPriority,
+              taskStatus,
+              taskInitialHour,
+              taskEndHour,
+            }) => {
+              return (
+                <TaskCard.Root key={taskName}>
+                  <TaskCard.Header taskName={taskName} taskTag={taskCategory} />
+                  <TaskCard.Hours
+                    startHour={taskInitialHour}
+                    endHour={taskEndHour}
+                  />
+                  <TaskPriority priorityLevel={taskPriority} />
+                  <TaskCard.Action status={taskStatus} taskId={id} />
+                </TaskCard.Root>
+              )
+            }
+          )}
+        </main>
+      )}
     </div>
   )
 }
