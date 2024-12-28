@@ -54,7 +54,44 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         taskCreationDate: yesterday.toDate(),
       },
     ],
-    finishedGoals: [],
+    finishedGoals: [
+      {
+        id: uuidv4(),
+        taskName: 'Estudar NextJS',
+        taskCategory: 'Pessoal',
+        taskPriority: 5,
+        taskStatus: 'completed',
+        taskCreationDate: yesterday.toDate(),
+        taskCompletedDate: currentDate.toDate(),
+      },
+      {
+        id: uuidv4(),
+        taskName: 'Estudar Node',
+        taskCategory: 'Pessoal',
+        taskPriority: 5,
+        taskStatus: 'completed',
+        taskCreationDate: yesterday.toDate(),
+        taskCompletedDate: currentDate.toDate(),
+      },
+      {
+        id: uuidv4(),
+        taskName: 'Estudar JavaScript',
+        taskCategory: 'Pessoal',
+        taskPriority: 5,
+        taskStatus: 'completed',
+        taskCreationDate: yesterday.toDate(),
+        taskCompletedDate: yesterday.toDate(),
+      },
+      {
+        id: uuidv4(),
+        taskName: 'Estudar React',
+        taskCategory: 'Pessoal',
+        taskPriority: 5,
+        taskStatus: 'completed',
+        taskCreationDate: currentDate.toDate(),
+        taskCompletedDate: yesterday.toDate(),
+      },
+    ],
     expiredGoals: [],
   })
 
@@ -154,10 +191,6 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         }
       }
     })
-
-    // if (task.taskCreationDate !== currentDate.toDate()) {
-
-    // }
   }
 
   return (

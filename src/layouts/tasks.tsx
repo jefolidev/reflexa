@@ -3,7 +3,6 @@ import { TaskTab } from '../components/tab'
 import { useModal } from '../hooks/useModal'
 import { NewGoalModal } from '../pages/goals/components/modals/new-task-modal'
 
-import { useEffect } from 'react'
 import plus from '../assets/common-assets/plus.svg'
 import completedIcon from '../assets/navbar-icons/completed.svg'
 import otherWeeksIcon from '../assets/navbar-icons/other-weeks.svg'
@@ -11,6 +10,7 @@ import pendingIcon from '../assets/navbar-icons/sandtime.svg'
 import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
 import { useDate } from '../hooks/useDate'
 import { useGoals } from '../hooks/useGoals'
+import { useState } from 'react'
 
 /* 
     TODO - 
@@ -18,9 +18,10 @@ import { useGoals } from '../hooks/useGoals'
 */
 
 export function TasksLayout() {
+
   const { isModalVisible, toggleModalState } = useModal()
   const { currentDate, todayDate, todayYear } = useDate()
-  const { goals, setGoalAsExpired } = useGoals()
+  const { goals } = useGoals()
 
   const currentMonth = currentDate.format('MMM')
   const formatedTodayMonth =
@@ -28,18 +29,16 @@ export function TasksLayout() {
 
   const currentDayWithFormatedMonth = `${todayDate} ${formatedTodayMonth}`
 
-  useEffect(() => {
-    goals.map((goal) => {
-      if (goal.taskCreationDate !== currentDate.toDate()) {
-        setGoalAsExpired()
-      }
-    })
-  }, [currentDate])
-
-  console.log(goals)
+  // useEffect(() => {
+  //   goals.map((goal) => {
+  //     if (goal.taskCreationDate !== currentDate.toDate()) {
+  //       setGoalAsExpired()
+  //     }
+  //   })
+  // }, [currentDate])
 
   return (
-    <div className=" bg-zinc-800 w-screen h-screen flex-col p-12 relative">
+    <div className=" bg-zinc-800 w-screen max-h-screen flex-col p-12 relative overflow-y-auto">
       <button
         type="button"
         className="btn-default btn-secondary"
@@ -79,9 +78,7 @@ export function TasksLayout() {
             label="Outras semanas"
           />
         </nav>
-        <div>
-          <Outlet />
-        </div>
+        <Outlet />
       </main>
     </div>
   )
