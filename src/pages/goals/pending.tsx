@@ -1,9 +1,18 @@
+import dayjs from 'dayjs'
+import { useDate } from '../../hooks/useDate'
 import { useGoals } from '../../hooks/useGoals'
 import { TaskCard } from './components/task-card/@index'
 import { TaskPriority } from './components/task-card/priority'
 
 export function PendingTasksPage() {
-  const { goals, totalGoals, highOrderGoals, completedGoals } = useGoals()
+  const { goals, highOrderGoals, finishedGoals, totalGoals } = useGoals()
+  const { currentDate } = useDate()
+
+  const todayCompletedGoalsQuantity = finishedGoals.filter((goal) => {
+    return dayjs(goal.taskCompletedDate).isSame(currentDate, 'day')
+  })
+
+  const totalGoalOfToday = totalGoals + todayCompletedGoalsQuantity.length
 
   return (
     <div>
@@ -14,9 +23,11 @@ export function PendingTasksPage() {
         </h2>
         <div className="flex justify-between my-1.5">
           <span className="font-monts font-sm  text-white">
-            <p className="font-bold inline-block ">{completedGoals.length}</p>{' '}
-            de <p className="font-bold inline-block ">{totalGoals}</p> tarefas
-            concluídas
+            <p className="font-bold inline-block ">
+              {todayCompletedGoalsQuantity.length}
+            </p>{' '}
+            de <p className="font-bold inline-block ">{totalGoalOfToday}</p>{' '}
+            tarefas concluídas
           </span>
         </div>
       </header>
