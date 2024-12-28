@@ -1,9 +1,9 @@
-import dayjs from 'dayjs'
 import { useGoals } from '../../hooks/useGoals'
 
 import 'dayjs/locale/pt-br'
 import { useEffect, useState } from 'react'
 import type { GoalsProps } from '../../reducers/goals/reducers'
+import { capitalizeMonth } from '../../utils/capitalize-fn'
 import { TaskCard } from './components/task-card/@index'
 import { WeeklyWrapperCard } from './components/wrapper-card'
 
@@ -12,41 +12,25 @@ export function CompletedTasksPage() {
     [key: string]: GoalsProps[]
   }>({})
 
-  const { finishedGoals } = useGoals()
-
-  const totalFinishedGoals = finishedGoals.length
-
-  function capitalizeMonth(date: string) {
-    const goalDate = dayjs(date)
-
-    const goalDay = goalDate.date()
-    const goalYear = goalDate.year()
-
-    const currentMonth = goalDate.locale('pt-br').format('MMM')
-    const formatedTodayMonth =
-      currentMonth[0].toUpperCase() + currentMonth.slice(1)
-
-    return `${goalDay} ${formatedTodayMonth}, ${goalYear}`
-  }
+  const { finishedGoals, totalFinishedGoals } = useGoals()
 
   useEffect(() => {
-    const goalsPerDay = finishedGoals.reduce(
+    const finishedGoalsPerDay = finishedGoals.reduce(
       (goalDateArray, goal) => {
         const date = goal.taskCompletedDate?.toDateString()
         if (date) {
           goalDateArray[date] = goalDateArray[date] ?? []
           goalDateArray[date].push(goal)
-
-          console.log(goalDateArray, goal)
         }
         return goalDateArray
       },
       {} as { [key: string]: GoalsProps[] }
     )
 
-    setGoalsPerDay(goalsPerDay)
+    setGoalsPerDay(finishedGoalsPerDay)
   }, [finishedGoals])
 
+  const finishedGoalsPerDay = Object.entries(goalsPerDay)
   return (
     <div className="flex flex-col gap-4 py-[20px]  ">
       <header>
@@ -54,7 +38,7 @@ export function CompletedTasksPage() {
           Você concluiu {totalFinishedGoals} tarefas ao decorrer dessa semana
         </h2>
       </header>
-      {Object.entries(goalsPerDay).map(([date, goals]) => (
+      {finishedGoalsPerDay.map(([date, goals]) => (
         <WeeklyWrapperCard key={date} goalsDate={capitalizeMonth(date)}>
           {Array.isArray(goals) &&
             goals.map(

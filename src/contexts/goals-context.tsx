@@ -29,6 +29,8 @@ interface GoalsContextProps {
   finishedGoals: GoalsProps[]
   expiredGoals: GoalsProps[]
   totalGoals: number
+  totalFinishedGoals: number
+  totalExpiredGoals: number
   completedGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
@@ -92,12 +94,43 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         taskCompletedDate: yesterday.toDate(),
       },
     ],
-    expiredGoals: [],
+    expiredGoals: [
+      {
+        id: uuidv4(),
+        taskName: 'Procrastinar',
+        taskCategory: 'Pessoal',
+        taskPriority: 1,
+        taskStatus: 'unfinished',
+        taskCreationDate: currentDate.toDate(),
+        taskExpirationDate: yesterday.toDate(),
+      },
+      {
+        id: uuidv4(),
+        taskName: 'Jogar Lol',
+        taskCategory: 'Pessoal',
+        taskPriority: 1,
+        taskStatus: 'unfinished',
+        taskCreationDate: currentDate.toDate(),
+        taskExpirationDate: yesterday.toDate(),
+      },
+      {
+        id: uuidv4(),
+        taskName: 'Jogar Valorant',
+        taskCategory: 'Pessoal',
+        taskPriority: 1,
+        taskStatus: 'unfinished',
+        taskCreationDate: currentDate.toDate(),
+        taskExpirationDate: yesterday.toDate(),
+      },
+    ],
   })
 
   const { goals, finishedGoals, expiredGoals } = goalsState
 
   const totalGoals = goals.length
+  const totalFinishedGoals = finishedGoals.length
+  const totalExpiredGoals = expiredGoals.length
+
   const completedGoals = goals.filter((goal: GoalsProps) => {
     return goal.taskStatus === 'completed'
   })
@@ -200,6 +233,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         finishedGoals,
         expiredGoals,
         totalGoals,
+        totalFinishedGoals,
+        totalExpiredGoals,
         completedGoals,
         highOrderGoals,
         setNewGoal,
