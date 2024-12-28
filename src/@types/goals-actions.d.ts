@@ -25,3 +25,7 @@ export type ActionTypesProps =
       type: ActionTypes.REMOVE_GOAL
       payload: { goalsWithoutCurrentGoal: GoalsProps[] }
     }
+  | {
+      type: ActionTypes.SET_GOAL_AS_EXPIRED
+      payload: { expiredTask: GoalsProps }
+    }

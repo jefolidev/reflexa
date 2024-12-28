@@ -6,6 +6,7 @@ export enum ActionTypes {
   SET_GOALS_AS_COMPLETE = 'SET_GOALS_AS_COMPLETE',
   EDIT_GOAL = 'EDIT_GOAL',
   REMOVE_GOAL = 'REMOVE_GOAL',
+  SET_GOAL_AS_EXPIRED = 'SET_GOAL_AS_EXPIRED',
 }
 
 export function addNewGoalAction(goalData: GoalsProps): ActionTypesProps {
@@ -37,5 +38,12 @@ export function removeGoalAction(
   return {
     type: ActionTypes.REMOVE_GOAL,
     payload: { goalsWithoutCurrentGoal },
+  }
+}
+
+export function setGoalAsExpiredAction(expiredTask: GoalsProps): ActionTypesProps {
+  return {
+    type: ActionTypes.SET_GOAL_AS_EXPIRED,
+    payload: { expiredTask },
   }
 }

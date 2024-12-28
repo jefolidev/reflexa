@@ -20,6 +20,7 @@ export type GoalsProps = z.infer<typeof goalSchema>
 interface GoalsState {
   goals: GoalsProps[]
   finishedGoals: GoalsProps[]
+  expiredGoals: GoalsProps[]
 }
 
 export function goalsReducer(state: GoalsState, action: ActionTypesProps) {
@@ -47,6 +48,12 @@ export function goalsReducer(state: GoalsState, action: ActionTypesProps) {
       return {
         ...state,
         goals: action.payload.goalsWithoutCurrentGoal,
+      }
+
+    case ActionTypes.SET_GOAL_AS_EXPIRED:
+      return {
+        ...state,
+        expiredGoals: [...state.expiredGoals, action.payload.expiredTask],
       }
 
     default:

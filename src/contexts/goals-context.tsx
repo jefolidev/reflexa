@@ -1,17 +1,25 @@
 import { type ReactNode, createContext, useReducer } from 'react'
 
 import { v4 as uuidv4 } from 'uuid'
+import { useDate } from '../hooks/useDate'
 import type { TaskStatusValues } from '../pages/goals/components/task-card/action'
 import {
   addNewGoalAction,
   editOrderAction,
   removeGoalAction,
+  setGoalAsExpiredAction,
   setGoalAsFinishedAction,
 } from '../reducers/goals/actions'
 import { type GoalsProps, goalsReducer } from '../reducers/goals/reducers'
 
-/* TODO 
-  ! Os horários não aparecem na tela de tasks concluídas
+/* 
+
+  TODO - 
+    ! 1. Fazer com que tarefas criadas e sua data não corresponder
+    ! ao dia de hoje, ela vá automaticamente para o "Não Concluídas."
+
+    ! 2. Os horários não aparecem na tela de tasks concluídas
+
 */
 interface GoalsProviderProps {
   children: ReactNode
@@ -19,10 +27,12 @@ interface GoalsProviderProps {
 interface GoalsContextProps {
   goals: GoalsProps[]
   finishedGoals: GoalsProps[]
+  expiredGoals: GoalsProps[]
   totalGoals: number
   completedGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
+  setGoalAsExpired: () => void
   setGoalAsFinished: (id: string) => void
   editCurrentGoal: (taskId: string, data: GoalsProps) => void
   removeCurrentGoal: (goalToRemove: GoalsProps) => void
@@ -31,12 +41,24 @@ interface GoalsContextProps {
 export const GoalsContext = createContext({} as GoalsContextProps)
 
 export function GoalsProvider({ children }: GoalsProviderProps) {
+  const { currentDate, yesterday } = useDate()
+
   const [goalsState, dispatch] = useReducer(goalsReducer, {
-    goals: [],
+    goals: [
+      {
+        id: uuidv4(),
+        taskName: 'Comer cu',
+        taskCategory: 'Pessoal',
+        taskPriority: 5,
+        taskStatus: 'pending',
+        taskCreationDate: yesterday.toDate(),
+      },
+    ],
     finishedGoals: [],
+    expiredGoals: [],
   })
 
-  const { goals, finishedGoals } = goalsState
+  const { goals, finishedGoals, expiredGoals } = goalsState
 
   const totalGoals = goals.length
   const completedGoals = goals.filter((goal: GoalsProps) => {
@@ -107,25 +129,51 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   function removeCurrentGoal(goalToRemove: GoalsProps) {
-    const goalsWithoutCurrentGoal = goals.filter(
-      (goal: GoalsProps) => goal.id !== goalToRemove.id
-    )
+    try {
+      const goalsWithoutCurrentGoal = goals.filter(
+        (goal: GoalsProps) => goal.id !== goalToRemove.id
+      )
 
-    dispatch(removeGoalAction(goalsWithoutCurrentGoal))
+      dispatch(removeGoalAction(goalsWithoutCurrentGoal))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  function setGoalAsExpired() {
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    goals.forEach((task: GoalsProps) => {
+      if (task.taskCreationDate < currentDate.startOf('day').toDate()) {
+        if (task.taskStatus === 'pending') {
+          const expiratedTask: GoalsProps = {
+            ...task,
+            taskExpirationDate: currentDate.toDate(),
+            taskStatus: 'unfinished',
+          }
+          dispatch(setGoalAsExpiredAction(expiratedTask))
+        }
+      }
+    })
+
+    // if (task.taskCreationDate !== currentDate.toDate()) {
+
+    // }
   }
 
   return (
     <GoalsContext.Provider
       value={{
         goals,
-        setNewGoal,
-        editCurrentGoal,
-        removeCurrentGoal,
         finishedGoals,
-        setGoalAsFinished,
+        expiredGoals,
         totalGoals,
         completedGoals,
         highOrderGoals,
+        setNewGoal,
+        editCurrentGoal,
+        removeCurrentGoal,
+        setGoalAsFinished,
+        setGoalAsExpired,
       }}
     >
       {children}
