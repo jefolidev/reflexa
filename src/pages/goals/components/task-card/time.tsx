@@ -1,29 +1,29 @@
+import type { GoalsProps } from '../../../../reducers/goals/reducers'
+
 interface TaskHoursProps {
-  startHour?: number
-  endHour?: number
+  hours: GoalsProps
 }
 
-export function TaskTime({ startHour, endHour }: TaskHoursProps) {
-  function addZeroBeforeNumber(number: number) {
-    if (number <= 9) {
-      const fixedNumber = `0${number}`
-      return fixedNumber
+export function TaskTime({ hours }: TaskHoursProps) {
+  function addZeroBeforeNumber() {
+    if (hours.taskInitialHour! || hours.taskEndHour!) {
+      const initialHour =
+        hours.taskInitialHour! < 10 &&
+        !String(hours.taskInitialHour).startsWith('0')
+          ? `0${hours.taskInitialHour}`
+          : hours.taskInitialHour
+      const endHour =
+        hours.taskEndHour! < 10 && !String(hours.taskEndHour).startsWith('0')
+          ? `0${hours.taskEndHour}`
+          : hours.taskEndHour
+
+      return `${initialHour}h - ${endHour}h`
     }
-    return number
   }
+
   return (
     <div className="flex gap-1 text-white font-monts font-medium text-lg">
-      {Number.isNaN(startHour) || Number.isNaN(endHour) ? (
-        <>
-          <span>{''}</span>
-        </>
-      ) : (
-        <>
-          <span>{addZeroBeforeNumber(startHour!)}h</span>
-          <span>-</span>
-          <span>{addZeroBeforeNumber(endHour!)}h</span>
-        </>
-      )}
+      {<span>{addZeroBeforeNumber()}</span>}
     </div>
   )
 }

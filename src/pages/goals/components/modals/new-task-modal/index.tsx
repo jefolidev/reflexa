@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ModalButton } from '../../../../../components/modal/button'
@@ -12,16 +13,15 @@ import { useModal } from '../../../../../hooks/useModal'
 const newGoalSchema = z.object({
   taskName: z.string().min(1, 'Insira algum nome para a tarefa.'),
   taskCategory: z.string().min(1, 'Adicione alguma categoria para sua tarefa.'),
-  taskInitialHour: z
-    .string()
-    .min(0, 'A hora inicial deve ser no mínimo 0.')
-    .max(23, 'A hora inicial deve ser no máximo 23.')
-    .optional(),
-  taskEndHour: z.string().min(0).max(23).optional(),
+  taskInitialHour: z.string().min(0).max(2).optional(),
+  taskEndHour: z.string().min(0).max(2).optional(),
   taskPriority: z.number().min(1).max(5),
 })
 
 export function NewGoalModal() {
+  const [isInitialHourHigherThanEndHour, setIsInitialHourHigherThanEndHour] =
+    useState<boolean>(false)
+
   const { setNewGoal } = useGoals()
   const { toggleModalState } = useModal()
   const { register, handleSubmit, watch } = useForm<GoalsProps>({
@@ -31,11 +31,18 @@ export function NewGoalModal() {
   const nameInput = watch('taskName')
   const categoryInput = watch('taskCategory')
   const priorityInput = watch('taskPriority')
+  const initalHourInput = watch('taskInitialHour')
+  const endHourInput = watch('taskEndHour')
 
   const isSubmitDisabled = !nameInput || !categoryInput || !priorityInput
 
   function handleNewGoalSubmission(data: GoalsProps) {
     try {
+      if (initalHourInput! > endHourInput!) {
+        setIsInitialHourHigherThanEndHour(true)
+        return
+      }
+
       setNewGoal(data)
       toggleModalState('createModal')
     } catch (err) {
@@ -75,6 +82,7 @@ export function NewGoalModal() {
             <div className="flex flex-col">
               <label htmlFor="">Hora inicial</label>
               <input
+                max={23}
                 type="number"
                 className="flex-1"
                 {...register('taskInitialHour', {
@@ -86,6 +94,7 @@ export function NewGoalModal() {
               <label htmlFor="">Hora final</label>
               <input
                 type="number"
+                max={23}
                 className="flex-1"
                 {...register('taskEndHour', {
                   max: 23,
@@ -106,6 +115,12 @@ export function NewGoalModal() {
               />
             </div>
           </fieldset>
+          {isInitialHourHigherThanEndHour && (
+            <p className="font-monts text-red-500">
+              A hora inicial deve ser menor que a final.
+            </p>
+          )}
+
           <ModalButton type="submit" disabled={isSubmitDisabled} />
         </form>
       </ModalContent>

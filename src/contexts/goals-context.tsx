@@ -242,3 +242,5 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     </GoalsContext.Provider>
   )
 }
+export { GoalsProps }
+

@@ -38,7 +38,7 @@ h4 {
 
 .btn-secondary {
 	background-color: #fff;
-	position: absolute;
+	position: fixed;
 	bottom: 3rem;
 	right: 3rem;
 

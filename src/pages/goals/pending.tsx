@@ -14,6 +14,7 @@ export function PendingTasksPage() {
   })
 
   const totalGoalOfToday = totalGoals + todayCompletedGoalsQuantity.length
+  console.log(goals)
 
   return (
     <div>
@@ -36,29 +37,19 @@ export function PendingTasksPage() {
         <NoTasks />
       ) : (
         <main className="flex flex-col gap-3">
-          {goals.map(
-            ({
-              id,
-              taskName,
-              taskCategory,
-              taskPriority,
-              taskStatus,
-              taskInitialHour,
-              taskEndHour,
-            }) => {
-              return (
-                <TaskCard.Root key={taskName}>
-                  <TaskCard.Header taskName={taskName} taskTag={taskCategory} />
-                  <TaskCard.Hours
-                    startHour={taskInitialHour}
-                    endHour={taskEndHour}
-                  />
-                  <TaskPriority priorityLevel={taskPriority} />
-                  <TaskCard.Action status={taskStatus} taskId={id} />
-                </TaskCard.Root>
-              )
-            }
-          )}
+          {goals.map((goal) => {
+            return (
+              <TaskCard.Root key={goal.taskName}>
+                <TaskCard.Header
+                  taskName={goal.taskName}
+                  taskTag={goal.taskCategory}
+                />
+                <TaskCard.Hours hours={goal} />
+                <TaskPriority priorityLevel={goal.taskPriority} />
+                <TaskCard.Action status={goal.taskStatus} taskId={goal.id} />
+              </TaskCard.Root>
+            )
+          })}
         </main>
       )}
     </div>

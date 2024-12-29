@@ -7,6 +7,7 @@ import { ModalRoot } from '../../../../../components/modal/root'
 import type { GoalsProps } from '../../../../../contexts/goals-context'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
+import { useState } from 'react'
 
 interface EditGoalModalProps {
   taskId: string
@@ -18,25 +19,22 @@ const editedGoalSchema = z.object({
   taskInitialHour: z
     .string()
     .min(0, 'A hora inicial deve ser no mínimo 0.')
-    .max(23, 'A hora inicial deve ser no máximo 23.')
+    .max(2)
     .optional(),
-  taskEndHour: z
-    .string()
-    .min(0, 'A hora final deve ser no mínimo 0.')
-    .max(23, 'A hora final deve ser no máximo 23.')
-    .optional(),
+  taskEndHour: z.string().min(0).max(2).optional(),
   taskPriority: z.number().min(1).max(5),
 })
 
-// type EditedGoalForm = z.infer<typeof editedGoalSchema>
-
 export function EditGoalModal({ taskId }: EditGoalModalProps) {
+  const [isInitialHourHigherThanEndHour, setIsInitialHourHigherThanEndHour] =
+    useState<boolean>(false)
+
   const { goals, editCurrentGoal } = useGoals()
   const { toggleModalState } = useModal()
 
   const goalToEdit = goals.find((goal) => goal.id === taskId)
 
-  const { register, handleSubmit } = useForm<GoalsProps>({
+  const { register, handleSubmit, watch } = useForm<GoalsProps>({
     resolver: zodResolver(editedGoalSchema),
     defaultValues: {
       taskName: goalToEdit?.taskName,
@@ -47,8 +45,15 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
     },
   })
 
+  const initalHourInput = watch('taskInitialHour')
+  const endHourInput = watch('taskEndHour')
+
   function handleEditGoalSubmission(data: GoalsProps) {
     try {
+      if (initalHourInput! > endHourInput!) {
+        setIsInitialHourHigherThanEndHour((prevState) => !prevState)
+        return
+      }
       editCurrentGoal(taskId, data)
       toggleModalState('editModal')
     } catch (err) {
@@ -88,6 +93,7 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
               <label htmlFor="">Hora inicial</label>
               <input
                 type="number"
+                max={23}
                 className="flex-1"
                 {...register('taskInitialHour')}
               />
@@ -96,6 +102,7 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
               <label htmlFor="">Hora final</label>
               <input
                 type="number"
+                max={23}
                 className="flex-1"
                 {...register('taskEndHour')}
               />
@@ -114,6 +121,11 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
               />
             </div>
           </fieldset>
+          {isInitialHourHigherThanEndHour && (
+            <p className="font-monts text-red-500">
+              A hora inicial deve ser menor que a final.
+            </p>
+          )}
           <button
             type="submit"
             className="btn-main p-2 font-semibold rounded-md justify-center flex"

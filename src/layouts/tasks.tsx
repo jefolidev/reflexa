@@ -9,8 +9,6 @@ import otherWeeksIcon from '../assets/navbar-icons/other-weeks.svg'
 import pendingIcon from '../assets/navbar-icons/sandtime.svg'
 import uncompletedIcon from '../assets/navbar-icons/uncompleted.svg'
 import { useDate } from '../hooks/useDate'
-import { useGoals } from '../hooks/useGoals'
-import { useState } from 'react'
 
 /* 
     TODO - 
@@ -18,24 +16,14 @@ import { useState } from 'react'
 */
 
 export function TasksLayout() {
-
   const { isModalVisible, toggleModalState } = useModal()
   const { currentDate, todayDate, todayYear } = useDate()
-  const { goals } = useGoals()
 
   const currentMonth = currentDate.format('MMM')
   const formatedTodayMonth =
     currentMonth[0].toUpperCase() + currentMonth.slice(1)
 
   const currentDayWithFormatedMonth = `${todayDate} ${formatedTodayMonth}`
-
-  // useEffect(() => {
-  //   goals.map((goal) => {
-  //     if (goal.taskCreationDate !== currentDate.toDate()) {
-  //       setGoalAsExpired()
-  //     }
-  //   })
-  // }, [currentDate])
 
   return (
     <div className=" bg-zinc-800 w-screen max-h-screen flex-col p-12 relative overflow-y-auto">
