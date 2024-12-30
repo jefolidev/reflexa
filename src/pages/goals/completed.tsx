@@ -17,13 +17,13 @@ export function CompletedTasksPage() {
 
   useEffect(() => {
     const finishedGoalsPerDay = finishedGoals.reduce(
-      (goalDateArray, goal) => {
+    (goalsGroupPerDay, goal) => {
         const date = `${goal.taskCompletedDate}`
         if (date) {
-          goalDateArray[date] = goalDateArray[date] ?? []
-          goalDateArray[date].push(goal)
+        goalsGroupPerDay[date] = goalsGroupPerDay[date] ?? []
+        goalsGroupPerDay[date].push(goal)
         }
-        return goalDateArray
+      return goalsGroupPerDay
       },
       {} as { [key: string]: GoalsProps[] }
     )

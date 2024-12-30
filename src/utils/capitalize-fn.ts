@@ -10,7 +10,7 @@ export function capitalizeMonth(date: Dayjs, year?: number) {
     currentMonth[0].toUpperCase() + currentMonth.slice(1)
 
   if (year) {
-    return `${goalDay} ${formatedTodayMonth} ${year}`
+    return `${goalDay} ${formatedTodayMonth} - ${year}`
   }
 
   return `${goalDay} ${formatedTodayMonth}`

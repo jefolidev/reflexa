@@ -16,7 +16,7 @@ export function UncompletedTasksPage() {
   useEffect(() => {
     const expiredGoalsPerDay = expiredGoals.reduce(
       (goalsGroupPerDay, goals) => {
-        const date = goals.taskExpirationDate?.toDateString()
+        const date = `${goals.taskExpirationDate}`
         if (date) {
           goalsGroupPerDay[date] = goalsGroupPerDay[date] ?? []
           goalsGroupPerDay[date].push(goals)
@@ -40,7 +40,13 @@ export function UncompletedTasksPage() {
       </header>
 
       {expiredGoalsPerDay.map(([date, goals]) => (
-        <WeeklyWrapperCard key={date} goalsDate={capitalizeMonth(dayjs(date))}>
+        <WeeklyWrapperCard
+          key={date}
+          goalsDate={capitalizeMonth(
+            dayjs(date),
+            goals[0].taskCreationDate.getFullYear()
+          )}
+        >
           {goals.map(
             ({ taskName, taskCategory, taskPriority, taskStatus, id }) => (
               <TaskCard.Root key={id}>

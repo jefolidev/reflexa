@@ -36,35 +36,59 @@ export function OtherWeeksTasksPage() {
 
   const weeklyGoals = Object.entries(goalsPerWeek)
 
+  const weeklyGoalsFinishedTasks = weeklyGoals.map(([week, goals]) => ({
+    week,
+    completedTasks: goals.filter((goal) => goal.taskStatus === 'completed')
+      .length,
+  }))
+  const weeklyGoalsExpiredTasks = weeklyGoals.map(([week, goals]) => ({
+    week,
+    completedTasks: goals.filter((goal) => goal.taskStatus === 'unfinished')
+      .length,
+  }))
+  console.log(weeklyGoalsFinishedTasks)
+
   return (
     <div className="flex flex-col gap-4 py-[19px]">
       <header>
         <h2>Você concluiu 28 tarefas ao decorrer desse mês</h2>
       </header>
-      {weeklyGoals.map((goals) => (
-        <WeeklyWrapperCard
-          key={goals[0]}
-          hasStatus
-          completedTasks={8}
-          uncompletedTasks={2}
-          goalsDate={goals[0]}
-        >
-          {goals[1].map((goal) => {
-            return (
-              <TaskCard.Root key={goal.id}>
-                <TaskCard.Header
-                  status="completed"
-                  taskName={goal.taskName}
-                  taskTag={goal.taskCategory}
-                />
-                <TaskCard.Hours hours={goal} />
-                <TaskCard.Priority priorityLevel={goal.taskPriority} />
-                <TaskCard.Action status={goal.taskStatus} taskId={goal.id} />
-              </TaskCard.Root>
-            )
-          })}
-        </WeeklyWrapperCard>
-      ))}
+      {weeklyGoals.map((goals) => {
+        const weekKey = goals[0]
+
+        const totalCompletedTasksInWeek =
+          weeklyGoalsFinishedTasks.find((item) => item.week === weekKey)
+            ?.completedTasks || 0
+
+        const totalExpiredTasksInWeek =
+          weeklyGoalsExpiredTasks.find((item) => item.week === weekKey)
+            ?.completedTasks || 0
+
+        return (
+          <WeeklyWrapperCard
+            key={goals[0]}
+            hasStatus
+            completedTasks={totalCompletedTasksInWeek}
+            uncompletedTasks={totalExpiredTasksInWeek}
+            goalsDate={goals[0]}
+          >
+            {goals[1].map((goal) => {
+              return (
+                <TaskCard.Root key={goal.id}>
+                  <TaskCard.Header
+                    status="completed"
+                    taskName={goal.taskName}
+                    taskTag={goal.taskCategory}
+                  />
+                  <TaskCard.Hours hours={goal} />
+                  <TaskCard.Priority priorityLevel={goal.taskPriority} />
+                  <TaskCard.Action status={goal.taskStatus} taskId={goal.id} />
+                </TaskCard.Root>
+              )
+            })}
+          </WeeklyWrapperCard>
+        )
+      })}
     </div>
   )
 }
