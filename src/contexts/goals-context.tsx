@@ -31,6 +31,7 @@ interface GoalsContextProps {
   totalGoals: number
   totalFinishedGoals: number
   totalExpiredGoals: number
+  finishedAndExpiredGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
   setGoalAsExpired: () => void
@@ -62,7 +63,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         taskCategory: 'Pessoal',
         taskPriority: 5,
         taskStatus: 'completed',
-        taskCreationDate: yesterday.toDate(),
+        taskCreationDate: new Date('2024-12-10'),
         taskCompletedDate: currentDate.toDate(),
       },
       {
@@ -133,6 +134,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   const highOrderGoals = goals.filter((goal: GoalsProps) => {
     return goal.taskPriority === 5
   })
+
+  const finishedAndExpiredGoals = [...finishedGoals, ...expiredGoals]
 
   function setNewGoal({
     taskName,
@@ -230,6 +233,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         totalGoals,
         totalFinishedGoals,
         totalExpiredGoals,
+        finishedAndExpiredGoals,
         highOrderGoals,
         setNewGoal,
         editCurrentGoal,
@@ -242,5 +246,4 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     </GoalsContext.Provider>
   )
 }
-export { GoalsProps }
-
+export type { GoalsProps }

@@ -10,6 +10,7 @@ interface DateContextProps {
   todayDate: number
   todayMonth: number
   todayYear: number
+  pickTheStartAndEndOfWeek: (date: Date) => Date[]
 }
 
 interface DateProviderProps {
@@ -28,6 +29,15 @@ export function DateProvider({ children }: DateProviderProps) {
   const todayMonth = currentDate.month()
   const todayYear = currentDate.year()
 
+  function pickTheStartAndEndOfWeek(date: Date) {
+    const dateInDayJs = dayjs(date)
+
+    const startOfWeek = dateInDayJs.startOf('week').toDate()
+    const endOfWeek = dateInDayJs.endOf('week').toDate()
+
+    return [startOfWeek, endOfWeek]
+  }
+
   return (
     <DateContext.Provider
       value={{
@@ -37,6 +47,7 @@ export function DateProvider({ children }: DateProviderProps) {
         todayDate,
         todayMonth,
         todayYear,
+        pickTheStartAndEndOfWeek,
       }}
     >
       {children}

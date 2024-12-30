@@ -1,5 +1,6 @@
 import { useGoals } from '../../hooks/useGoals'
 
+import dayjs from 'dayjs'
 import 'dayjs/locale/pt-br'
 import { useEffect, useState } from 'react'
 import type { GoalsProps } from '../../reducers/goals/reducers'
@@ -17,7 +18,7 @@ export function CompletedTasksPage() {
   useEffect(() => {
     const finishedGoalsPerDay = finishedGoals.reduce(
       (goalDateArray, goal) => {
-        const date = goal.taskCompletedDate?.toDateString()
+        const date = `${goal.taskCompletedDate}`
         if (date) {
           goalDateArray[date] = goalDateArray[date] ?? []
           goalDateArray[date].push(goal)
@@ -39,7 +40,13 @@ export function CompletedTasksPage() {
         </h2>
       </header>
       {finishedGoalsPerDay.map(([date, goals]) => (
-        <WeeklyWrapperCard key={date} goalsDate={capitalizeMonth(date)}>
+        <WeeklyWrapperCard
+          key={date}
+          goalsDate={capitalizeMonth(
+            dayjs(date),
+            goals[0].taskCreationDate.getFullYear()
+          )}
+        >
           {Array.isArray(goals) &&
             goals.map(
               ({ taskName, taskCategory, taskPriority, taskStatus, id }) => {

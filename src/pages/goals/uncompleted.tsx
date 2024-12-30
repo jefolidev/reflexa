@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useGoals } from '../../hooks/useGoals'
 import type { GoalsProps } from '../../reducers/goals/reducers'
@@ -39,7 +40,7 @@ export function UncompletedTasksPage() {
       </header>
 
       {expiredGoalsPerDay.map(([date, goals]) => (
-        <WeeklyWrapperCard key={date} goalsDate={capitalizeMonth(date)}>
+        <WeeklyWrapperCard key={date} goalsDate={capitalizeMonth(dayjs(date))}>
           {goals.map(
             ({ taskName, taskCategory, taskPriority, taskStatus, id }) => (
               <TaskCard.Root key={id}>

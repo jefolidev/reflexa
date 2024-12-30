@@ -33,7 +33,7 @@ export function WeeklyWrapperCard({
 
   return (
     <div
-      className={`${cardSizeStyle} flex py-2 bg-stone-950/75 flex-col rounded-xl`}
+      className={`${cardSizeStyle} flex py-3 bg-stone-950/75 flex-col rounded-xl `}
     >
       <header className="px-6 py-3 flex justify-between">
         <h2>{goalsDate}</h2>
@@ -55,9 +55,7 @@ export function WeeklyWrapperCard({
           </button>
         </div>
       </header>
-      <main
-        className={`flex flex-col gap-4 px-2 max-h-[23rem]  overflow-scroll ${cardContentVisibility}`}
-      >
+      <main className={`flex flex-col gap-4 px-2 ${cardContentVisibility}`}>
         {children}
       </main>
     </div>
