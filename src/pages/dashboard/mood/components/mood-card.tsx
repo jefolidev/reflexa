@@ -2,7 +2,12 @@ import { useState } from 'react'
 import arrowLeft from '../../../../assets/common-assets/arrow-left.svg'
 import arrowRight from '../../../../assets/common-assets/arrow-right.svg'
 import check from '../../../../assets/common-assets/check.svg'
-import happy from '../../../../assets/emojis-card/happy-emotion.svg'
+
+import depressionEmoji from '../../../../assets/emojis-card/depression-emotion.svg'
+import excitedEmoji from '../../../../assets/emojis-card/excited-emotion.svg'
+import happyEmoji from '../../../../assets/emojis-card/happy-emotion.svg'
+import neutralEmoji from '../../../../assets/emojis-card/neutral-emotion.svg'
+import sadEmoji from '../../../../assets/emojis-card/sad-emotion.svg'
 
 enum MoodEnum {
   'very_sad' = 'Muito Triste',
@@ -17,44 +22,112 @@ enum ColorEnum {
   'sad' = '#4E8CFF',
   'neutral' = '#171717',
   'happy' = '#E4E452',
-  'very_happy' = '#126D24',
+  'very_happy' = '#dede6a',
 }
+
+const EmojiEnum = {
+  very_sad: depressionEmoji,
+  sad: sadEmoji,
+  neutral: neutralEmoji,
+  happy: happyEmoji,
+  very_happy: excitedEmoji,
+} as const
+
+type Mood = keyof typeof EmojiEnum
 
 interface MoodCardProp {
   index: number
   mood: MoodEnum
   color: ColorEnum
+  emoji: (typeof EmojiEnum)[Mood]
   status: boolean
 }
 
 export function MoodCard() {
   const [index, setIndex] = useState(1)
+  const [moods, setMoods] = useState<MoodCardProp[]>([
+    {
+      index: 1,
+      mood: MoodEnum.very_sad,
+      color: ColorEnum.very_sad,
+      emoji: EmojiEnum.very_sad,
+      status: true,
+    },
+    {
+      index: 2,
+      mood: MoodEnum.sad,
+      color: ColorEnum.sad,
+      emoji: EmojiEnum.sad,
+      status: false,
+    },
+    {
+      index: 3,
+      mood: MoodEnum.neutral,
+      color: ColorEnum.neutral,
+      emoji: EmojiEnum.neutral,
+      status: false,
+    },
+    {
+      index: 4,
+      mood: MoodEnum.happy,
+      color: ColorEnum.happy,
+      emoji: EmojiEnum.happy,
+      status: false,
+    },
+    {
+      index: 5,
+      mood: MoodEnum.very_happy,
+      color: ColorEnum.very_happy,
+      emoji: EmojiEnum.very_happy,
+      status: false,
+    },
+  ])
 
-  const moods: { mood: MoodEnum; color: ColorEnum }[] = [
-    { mood: MoodEnum.very_sad, color: ColorEnum.very_sad },
-    { mood: MoodEnum.sad, color: ColorEnum.sad },
-    { mood: MoodEnum.neutral, color: ColorEnum.neutral },
-    { mood: MoodEnum.happy, color: ColorEnum.happy },
-    { mood: MoodEnum.very_happy, color: ColorEnum.very_happy },
-  ]
+  function getMoodIndex(index: number) {
+    const moods = [
+      MoodEnum.very_sad,
+      MoodEnum.sad,
+      MoodEnum.neutral,
+      MoodEnum.happy,
+      MoodEnum.very_happy,
+    ]
 
-  const [cards, setCards] = useState<MoodCardProp[]>(
-    moods.map((m, i) => ({
-      index: i + 1,
-      mood: m.mood,
-      color: m.color,
-      status: i + 1 === index,
-    }))
-  )
+    const colors = [
+      ColorEnum.very_sad,
+      ColorEnum.sad,
+      ColorEnum.neutral,
+      ColorEnum.happy,
+      ColorEnum.very_happy,
+    ]
 
-  const updateMoodCardIndex = (direction: 'increase' | 'decrease') => {
+    const emojiIcons = [
+      EmojiEnum.very_sad,
+      EmojiEnum.sad,
+      EmojiEnum.neutral,
+      EmojiEnum.happy,
+      EmojiEnum.very_happy,
+    ]
+
+    return {
+      mood: moods[index - 1],
+      color: colors[index - 1],
+      emoji: emojiIcons[index - 1],
+    }
+  }
+
+  function updateMoodCardIndex(direction: 'increase' | 'decrease') {
     const newIndex =
       direction === 'increase'
-        ? (index % moods.length) + 1
-        : ((index - 2 + moods.length) % moods.length) + 1
+        ? index >= 5
+          ? 1
+          : index + 1
+        : index <= 1
+          ? 5
+          : index - 1
 
     setIndex(newIndex)
-    setCards((prevCards) =>
+
+    setMoods((prevCards) =>
       prevCards.map((card) => ({
         ...card,
         status: card.index === newIndex,
@@ -62,24 +135,22 @@ export function MoodCard() {
     )
   }
 
-  const currentCard = cards.find((card) => card.status)
+  const { mood, color, emoji } = getMoodIndex(index)
 
   return (
     <div
-      style={{ backgroundColor: currentCard?.color }}
+      style={{ backgroundColor: color }}
       className="h-full flex-1 flex flex-col items-center justify-evenly rounded-2xl p-2"
     >
       <header>
         <h3 className="text-center">Como você está se sentindo hoje?</h3>
       </header>
       <div>
-        <img src={happy} alt="" />
+        <img src={emoji} alt="" />
       </div>
-      <span className="font-poppins text-white text-xl">
-        Estou {currentCard?.mood}
-      </span>
+      <span className="font-poppins text-white text-xl">Estou {mood}</span>
       <div className="flex gap-2">
-        {cards.map((card) => {
+        {moods.map((card) => {
           return card.status ? (
             <div
               key={card.color}
