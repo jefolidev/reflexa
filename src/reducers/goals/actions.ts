@@ -41,7 +41,9 @@ export function removeGoalAction(
   }
 }
 
-export function setGoalAsExpiredAction(expiredTask: GoalsProps): ActionTypesProps {
+export function setGoalAsExpiredAction(
+  expiredTask: GoalsProps
+): ActionTypesProps {
   return {
     type: ActionTypes.SET_GOAL_AS_EXPIRED,
     payload: { expiredTask },

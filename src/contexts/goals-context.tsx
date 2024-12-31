@@ -6,7 +6,6 @@ import type { TaskStatusValues } from '../pages/goals/components/task-card/actio
 import {
   addNewGoalAction,
   editOrderAction,
-  removeGoalAction,
   setGoalAsExpiredAction,
   setGoalAsFinishedAction,
 } from '../reducers/goals/actions'
@@ -37,7 +36,7 @@ interface GoalsContextProps {
   setGoalAsExpired: () => void
   setGoalAsFinished: (id: string) => void
   editCurrentGoal: (taskId: string, data: GoalsProps) => void
-  removeCurrentGoal: (goalToRemove: GoalsProps) => void
+  removeCurrentGoal: (goalId: string) => void
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -196,16 +195,22 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
-  function removeCurrentGoal(goalToRemove: GoalsProps) {
-    try {
-      const goalsWithoutCurrentGoal = goals.filter(
-        (goal: GoalsProps) => goal.id !== goalToRemove.id
-      )
+  function removeCurrentGoal(goalId: string) {
+    console.log('Antes de remover', goals)
+    const goalToDelete = goals.find((goal: GoalsProps) => goal.id === goalId)
+    console.log('Tarefa a remover ', goalToDelete)
 
-      dispatch(removeGoalAction(goalsWithoutCurrentGoal))
-    } catch (err) {
-      console.log(err)
-    }
+    // if (goalToDelete) {
+    //   const goalsWithoutCurrentGoal = goals.filter(
+    //     (goal: GoalsProps) => goal.id !== goalToDelete?.id
+    //   )
+    //   dispatch(removeGoalAction(goalsWithoutCurrentGoal))
+    // }
+
+    console.log('id recebido', goalId)
+    console.log('id para deletar', goalToDelete)
+
+    console.log('Depois de remover', goals)
   }
 
   function setGoalAsExpired() {
