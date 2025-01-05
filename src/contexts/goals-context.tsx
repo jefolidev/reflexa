@@ -33,10 +33,11 @@ interface GoalsContextProps {
   finishedAndExpiredGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
+  findGoalById: (id: string) => void
+  editCurrentGoal: (goalToUse: GoalsProps, data: GoalsProps) => void
   setGoalAsExpired: () => void
   setGoalAsFinished: (id: string) => void
-  editCurrentGoal: (taskId: string, data: GoalsProps) => void
-  removeCurrentGoal: (goalId: string) => void
+  removeCurrentGoal: (goalToUse: GoalsProps) => void
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -136,6 +137,10 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
 
   const finishedAndExpiredGoals = [...finishedGoals, ...expiredGoals]
 
+  function findGoalById(id: string): GoalsProps | undefined {
+    return goals.find((goal) => goal.id === id)
+  }
+
   function setNewGoal({
     taskName,
     taskCategory,
@@ -158,31 +163,37 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   function setGoalAsFinished(id: string) {
-    const goalToComplete = goals.find((goal: GoalsProps) => goal.id === id)
+    if (id) {
+      const goalToComplete = goals.find((goal: GoalsProps) => goal.id === id)
 
-    if (!goalToComplete) return
+      if (!goalToComplete) return
 
-    const goalsWithoutCurrentCompletedGoal = goals.filter(
-      (goal: GoalsProps) => goal.id !== goalToComplete?.id
-    )
-
-    const finishedTask = {
-      ...goalToComplete,
-      taskCompletedDate: new Date(),
-      taskStatus: 'completed',
-    }
-
-    if (goalToComplete) {
-      dispatch(
-        setGoalAsFinishedAction(finishedTask, goalsWithoutCurrentCompletedGoal)
+      const goalsWithoutCurrentCompletedGoal = goals.filter(
+        (goal: GoalsProps) => goal.id !== goalToComplete?.id
       )
+
+      const finishedTask = {
+        ...goalToComplete,
+        taskCompletedDate: new Date(),
+        taskStatus: 'completed',
+      }
+
+      if (goalToComplete) {
+        dispatch(
+          setGoalAsFinishedAction(
+            finishedTask,
+            goalsWithoutCurrentCompletedGoal
+          )
+        )
+      }
+    } else {
     }
   }
 
-  function editCurrentGoal(taskId: string, data: GoalsProps) {
+  function editCurrentGoal(goalToUse: GoalsProps, data: GoalsProps) {
     try {
       const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
-        goal.id === taskId
+        goal.id === goalToUse.id
           ? {
               ...goal,
               ...data,
@@ -195,10 +206,14 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
-  function removeCurrentGoal(goalId: string) {
+  function removeCurrentGoal(goalToUse: GoalsProps) {
     console.log('Antes de remover', goals)
-    const goalToDelete = goals.find((goal: GoalsProps) => goal.id === goalId)
+
+    const goalId = findGoalById(goalToUse.id)
+    const goalToDelete = goals.indexOf(goalToUse)
+
     console.log('Tarefa a remover ', goalToDelete)
+    console.log('Tarefa a remover 2', goalId)
 
     // if (goalToDelete) {
     //   const goalsWithoutCurrentGoal = goals.filter(
@@ -206,11 +221,6 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     //   )
     //   dispatch(removeGoalAction(goalsWithoutCurrentGoal))
     // }
-
-    console.log('id recebido', goalId)
-    console.log('id para deletar', goalToDelete)
-
-    console.log('Depois de remover', goals)
   }
 
   function setGoalAsExpired() {
@@ -241,10 +251,11 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         finishedAndExpiredGoals,
         highOrderGoals,
         setNewGoal,
+        findGoalById,
         editCurrentGoal,
-        removeCurrentGoal,
-        setGoalAsFinished,
         setGoalAsExpired,
+        setGoalAsFinished,
+        removeCurrentGoal,
       }}
     >
       {children}

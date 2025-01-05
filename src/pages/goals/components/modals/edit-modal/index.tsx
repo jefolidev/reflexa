@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ModalContent } from '../../../../../components/modal/content'
@@ -7,10 +8,9 @@ import { ModalRoot } from '../../../../../components/modal/root'
 import type { GoalsProps } from '../../../../../contexts/goals-context'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
-import { useState } from 'react'
 
 interface EditGoalModalProps {
-  taskId: string
+  goal: GoalsProps
 }
 
 const editedGoalSchema = z.object({
@@ -25,23 +25,21 @@ const editedGoalSchema = z.object({
   taskPriority: z.number().min(1).max(5),
 })
 
-export function EditGoalModal({ taskId }: EditGoalModalProps) {
+export function EditGoalModal({ goal }: EditGoalModalProps) {
   const [isInitialHourHigherThanEndHour, setIsInitialHourHigherThanEndHour] =
     useState<boolean>(false)
 
-  const { goals, editCurrentGoal } = useGoals()
+  const { editCurrentGoal } = useGoals()
   const { toggleModalState } = useModal()
-
-  const goalToEdit = goals.find((goal) => goal.id === taskId)
 
   const { register, handleSubmit, watch } = useForm<GoalsProps>({
     resolver: zodResolver(editedGoalSchema),
     defaultValues: {
-      taskName: goalToEdit?.taskName,
-      taskCategory: goalToEdit?.taskCategory,
-      taskInitialHour: goalToEdit?.taskInitialHour,
-      taskEndHour: goalToEdit?.taskEndHour,
-      taskPriority: goalToEdit?.taskPriority,
+      taskName: goal?.taskName,
+      taskCategory: goal?.taskCategory,
+      taskInitialHour: goal?.taskInitialHour,
+      taskEndHour: goal?.taskEndHour,
+      taskPriority: goal?.taskPriority,
     },
   })
 
@@ -49,16 +47,12 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
   const endHourInput = watch('taskEndHour')
 
   function handleEditGoalSubmission(data: GoalsProps) {
-    try {
-      if (initalHourInput! > endHourInput!) {
-        setIsInitialHourHigherThanEndHour((prevState) => !prevState)
-        return
-      }
-      editCurrentGoal(taskId, data)
-      toggleModalState('editModal')
-    } catch (err) {
-      console.error(err)
+    if (initalHourInput! > endHourInput!) {
+      setIsInitialHourHigherThanEndHour((prevState) => !prevState)
+      return
     }
+    editCurrentGoal(goal, data)
+    toggleModalState('editModal')
   }
   return (
     <ModalRoot>

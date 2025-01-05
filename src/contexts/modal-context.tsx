@@ -28,6 +28,8 @@ export function ModalProvider({ children }: ModalProviderProps) {
     }))
   }
 
+  
+
   return (
     <ModalContext.Provider
       value={{

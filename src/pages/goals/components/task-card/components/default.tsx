@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { GoalsProps } from '../../../../../contexts/goals-context'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
 import uncheckedIcon from '../../../assets/check-default.svg'
@@ -10,73 +11,84 @@ import { EditGoalModal } from '../../modals/edit-modal'
 import { ToolTip } from './tooltip'
 
 interface DefaultTagProps {
-	taskId: string
+  taskId: string
 }
 
 export function DefaultTag({ taskId }: DefaultTagProps) {
-	const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
-	const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
+  const [taskToUse, setTaskToUse] = useState<GoalsProps>()
+  const [activeToolTip, setActiveToolTip] = useState<string | null>(null)
+  const [isButtonHovered, setButtonHovered] = useState<boolean>(false)
 
-	const { setGoalAsFinished } = useGoals()
-	const { isModalVisible, toggleModalState } = useModal()
+  const { setGoalAsFinished } = useGoals()
+  const { isModalVisible, toggleModalState } = useModal()
 
-	function setToolTipVisible(buttonId: string) {
-		setActiveToolTip(buttonId)
-	}
+  const { goals } = useGoals()
 
-	function setToolTipInvisible() {
-		setActiveToolTip(null)
-	}
+  useEffect(() => {
+    const currentGoal = goals.find((goal) => goal.id === taskId)
+    if (currentGoal) {
+      setTaskToUse(currentGoal)
+      console.log(currentGoal) 
+    }
+  }, [taskId, goals]) 
 
-	function clickButtonHandler(id: string) {
-		setGoalAsFinished(id)
-	}
+  function setToolTipVisible(buttonId: string) {
+    setActiveToolTip(buttonId)
+  }
 
-	function hoverButtonHandler() {
-		setButtonHovered((prevButtonState) => !prevButtonState)
-	}
+  function setToolTipInvisible() {
+    setActiveToolTip(null)
+  }
 
-	return (
-		<div className="relative flex gap-4">
-			{isModalVisible('editModal') && <EditGoalModal taskId={taskId} />}
-			{isModalVisible('deleteModal') && <DeleteConfirmModal taskId={taskId} />}
+  function finishGoalButtonHandler(id: string) {
+    setGoalAsFinished(id)
+  }
 
-			<ToolTip text="Excluir" isVisible={activeToolTip === 'delete'} />
+  function hoverButtonHandler() {
+    setButtonHovered((prevButtonState) => !prevButtonState)
+  }
 
-			<button
-				type="button"
-				className="noStyleButton hover:brightness-[0.75]"
-				onClick={() => toggleModalState('deleteModal')}
-				onMouseEnter={() => setToolTipVisible('delete')}
-				onMouseLeave={setToolTipInvisible}
-			>
-				<img src={deleteIcon} alt="" />
-			</button>
+  return (
+    <div className="relative flex gap-4">
+      {isModalVisible('editModal') && <EditGoalModal goal={taskToUse!} />}
+      {isModalVisible('deleteModal') && <DeleteConfirmModal goal={taskToUse} />}
 
-			<ToolTip text="Editar" isVisible={activeToolTip === 'edit'} />
-			<button
-				type="button"
-				className="noStyleButton hover:brightness-[0.75]"
-				onMouseEnter={() => setToolTipVisible('edit')}
-				onMouseLeave={setToolTipInvisible}
-				onClick={() => toggleModalState('editModal')}
-			>
-				<img src={editIcon} alt="" />
-			</button>
+      <ToolTip text="Excluir" isVisible={activeToolTip === 'delete'} />
 
-			<button
-				type="button"
-				className="noStyleButton"
-				onClick={() => clickButtonHandler(taskId)}
-				onMouseEnter={hoverButtonHandler}
-				onMouseLeave={hoverButtonHandler}
-			>
-				{isButtonHovered ? (
-					<img src={checkedIcon} alt="" className="w-6 opacity-75" />
-				) : (
-					<img src={uncheckedIcon} alt="" className="w-6" />
-				)}
-			</button>
-		</div>
-	)
+      <button
+        type="button"
+        className="noStyleButton hover:brightness-[0.75]"
+        onClick={() => toggleModalState('deleteModal')}
+        onMouseEnter={() => setToolTipVisible('delete')}
+        onMouseLeave={setToolTipInvisible}
+      >
+        <img src={deleteIcon} alt="" />
+      </button>
+
+      <ToolTip text="Editar" isVisible={activeToolTip === 'edit'} />
+      <button
+        type="button"
+        className="noStyleButton hover:brightness-[0.75]"
+        onMouseEnter={() => setToolTipVisible('edit')}
+        onMouseLeave={setToolTipInvisible}
+        onClick={() => toggleModalState('editModal')}
+      >
+        <img src={editIcon} alt="" />
+      </button>
+
+      <button
+        type="button"
+        className="noStyleButton"
+        onClick={() => finishGoalButtonHandler(taskToUse!.id)}
+        onMouseEnter={hoverButtonHandler}
+        onMouseLeave={hoverButtonHandler}
+      >
+        {isButtonHovered ? (
+          <img src={checkedIcon} alt="" className="w-6 opacity-75" />
+        ) : (
+          <img src={uncheckedIcon} alt="" className="w-6" />
+        )}
+      </button>
+    </div>
+  )
 }
