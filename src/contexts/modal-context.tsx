@@ -2,6 +2,7 @@ import { type ReactNode, createContext, useState } from 'react'
 
 interface ModalContextProps {
   modalVisibility: Record<string, boolean>
+  isAnyModalVisible: boolean
   isModalVisible: (modalName: string) => boolean
   toggleModalState: (modalName: string) => void
 }
@@ -28,14 +29,17 @@ export function ModalProvider({ children }: ModalProviderProps) {
     }))
   }
 
-  
+  const isAnyModalVisible = Object.values(modalVisibility).some(
+    (state) => state
+  )
 
   return (
     <ModalContext.Provider
       value={{
         isModalVisible,
-        modalVisibility,
         toggleModalState,
+        isAnyModalVisible,
+        modalVisibility,
       }}
     >
       {children}
