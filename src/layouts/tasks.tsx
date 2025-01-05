@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 import { TaskTab } from '../components/tab'
 import { useModal } from '../hooks/useModal'
 import { NewGoalModal } from '../pages/goals/components/modals/new-task-modal'
@@ -18,6 +18,21 @@ import { useDate } from '../hooks/useDate'
 export function TasksLayout() {
   const { isModalVisible, toggleModalState } = useModal()
   const { currentDate, todayDate, todayYear } = useDate()
+
+  const location = useLocation()
+  const pathName = location.pathname.split('/').filter((x) => x)
+
+  const routeNames: { [key: string]: string } = {
+    tasks: 'Objetivos',
+    pending: 'Pendentes',
+    uncompleted: 'Não Concluídos',
+    completed: 'Concluídos',
+    'other-weeks': 'Outras Semanas',
+  }
+
+  const currentRouteName = pathName
+    .map((segment) => routeNames[segment] || segment)
+    .join(' / ')
 
   const currentMonth = currentDate.format('MMM')
   const formatedTodayMonth =
@@ -39,7 +54,12 @@ export function TasksLayout() {
 
       <header className="mb-4">
         <span className="text-stone-500 text-sm font-poppins inline-flex gap-1">
-          Dashboard / <p className="text-white">Objetivos</p>
+          {currentRouteName && (
+            <>
+              {' '}
+              <p>{currentRouteName}</p>
+            </>
+          )}
         </span>
       </header>
       <main>

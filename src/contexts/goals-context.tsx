@@ -33,11 +33,19 @@ interface GoalsContextProps {
   finishedAndExpiredGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
+<<<<<<< HEAD
   findGoalById: (id: string) => void
   editCurrentGoal: (goalToUse: GoalsProps, data: GoalsProps) => void
   setGoalAsExpired: () => void
   setGoalAsFinished: (id: string) => void
   removeCurrentGoal: (goalToUse: GoalsProps) => void
+=======
+  findGoalById: (goalId: string) => GoalsProps
+  setGoalAsExpired: () => void
+  setGoalAsFinished: (goalId: string) => void
+  editCurrentGoal: (goalId: string, data: GoalsProps) => void
+  removeCurrentGoal: (goalToRemove: GoalsProps) => void
+>>>>>>> update/dashboard-features
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
@@ -137,8 +145,15 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
 
   const finishedAndExpiredGoals = [...finishedGoals, ...expiredGoals]
 
+<<<<<<< HEAD
   function findGoalById(id: string): GoalsProps | undefined {
     return goals.find((goal) => goal.id === id)
+=======
+  function findGoalById(goalId: string): GoalsProps {
+    const goal = goals.find((goal) => goal.id === goalId)
+
+    return goal
+>>>>>>> update/dashboard-features
   }
 
   function setNewGoal({
@@ -162,9 +177,14 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     dispatch(addNewGoalAction(goalData))
   }
 
+<<<<<<< HEAD
   function setGoalAsFinished(id: string) {
     if (id) {
       const goalToComplete = goals.find((goal: GoalsProps) => goal.id === id)
+=======
+  function setGoalAsFinished(goalId: string) {
+    const goalToComplete = goals.find((goal: GoalsProps) => goal.id === goalId)
+>>>>>>> update/dashboard-features
 
       if (!goalToComplete) return
 
@@ -190,10 +210,17 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
+<<<<<<< HEAD
   function editCurrentGoal(goalToUse: GoalsProps, data: GoalsProps) {
     try {
       const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
         goal.id === goalToUse.id
+=======
+  function editCurrentGoal(goalId: string, data: GoalsProps) {
+    try {
+      const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
+        goal.id === goalId
+>>>>>>> update/dashboard-features
           ? {
               ...goal,
               ...data,
@@ -224,7 +251,6 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   function setGoalAsExpired() {
-    // biome-ignore lint/complexity/noForEach: <explanation>
     goals.forEach((task: GoalsProps) => {
       if (task.taskCreationDate < currentDate.startOf('day').toDate()) {
         if (task.taskStatus === 'pending') {

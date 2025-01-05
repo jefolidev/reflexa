@@ -51,7 +51,11 @@ export function EditGoalModal({ goal }: EditGoalModalProps) {
       setIsInitialHourHigherThanEndHour((prevState) => !prevState)
       return
     }
+<<<<<<< HEAD
     editCurrentGoal(goal, data)
+=======
+    editCurrentGoal(taskId, data)
+>>>>>>> update/dashboard-features
     toggleModalState('editModal')
   }
   return (
