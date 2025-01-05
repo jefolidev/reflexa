@@ -34,9 +34,10 @@ interface GoalsContextProps {
   finishedAndExpiredGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
+  findGoalById: (goalId: string) => GoalsProps
   setGoalAsExpired: () => void
-  setGoalAsFinished: (id: string) => void
-  editCurrentGoal: (taskId: string, data: GoalsProps) => void
+  setGoalAsFinished: (goalId: string) => void
+  editCurrentGoal: (goalId: string, data: GoalsProps) => void
   removeCurrentGoal: (goalToRemove: GoalsProps) => void
 }
 
@@ -137,6 +138,12 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
 
   const finishedAndExpiredGoals = [...finishedGoals, ...expiredGoals]
 
+  function findGoalById(goalId: string): GoalsProps {
+    const goal = goals.find((goal) => goal.id === goalId)
+
+    return goal
+  }
+
   function setNewGoal({
     taskName,
     taskCategory,
@@ -158,8 +165,8 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     dispatch(addNewGoalAction(goalData))
   }
 
-  function setGoalAsFinished(id: string) {
-    const goalToComplete = goals.find((goal: GoalsProps) => goal.id === id)
+  function setGoalAsFinished(goalId: string) {
+    const goalToComplete = goals.find((goal: GoalsProps) => goal.id === goalId)
 
     if (!goalToComplete) return
 
@@ -180,10 +187,10 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
     }
   }
 
-  function editCurrentGoal(taskId: string, data: GoalsProps) {
+  function editCurrentGoal(goalId: string, data: GoalsProps) {
     try {
       const goalsAfterUpdate = goals.map((goal: GoalsProps) =>
-        goal.id === taskId
+        goal.id === goalId
           ? {
               ...goal,
               ...data,
@@ -209,7 +216,6 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
   }
 
   function setGoalAsExpired() {
-    // biome-ignore lint/complexity/noForEach: <explanation>
     goals.forEach((task: GoalsProps) => {
       if (task.taskCreationDate < currentDate.startOf('day').toDate()) {
         if (task.taskStatus === 'pending') {
@@ -236,6 +242,7 @@ export function GoalsProvider({ children }: GoalsProviderProps) {
         finishedAndExpiredGoals,
         highOrderGoals,
         setNewGoal,
+        findGoalById,
         editCurrentGoal,
         removeCurrentGoal,
         setGoalAsFinished,

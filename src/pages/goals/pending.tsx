@@ -39,7 +39,7 @@ export function PendingTasksPage() {
         <main className="flex flex-col gap-3">
           {goals.map((goal) => {
             return (
-              <TaskCard.Root key={goal.taskName}>
+              <TaskCard.Root key={goal.taskName} goalId={goal.id}>
                 <TaskCard.Header
                   taskName={goal.taskName}
                   taskTag={goal.taskCategory}

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { ModalContent } from '../../../../../components/modal/content'
@@ -7,7 +8,6 @@ import { ModalRoot } from '../../../../../components/modal/root'
 import type { GoalsProps } from '../../../../../contexts/goals-context'
 import { useGoals } from '../../../../../hooks/useGoals'
 import { useModal } from '../../../../../hooks/useModal'
-import { useState } from 'react'
 
 interface EditGoalModalProps {
   taskId: string
@@ -49,16 +49,12 @@ export function EditGoalModal({ taskId }: EditGoalModalProps) {
   const endHourInput = watch('taskEndHour')
 
   function handleEditGoalSubmission(data: GoalsProps) {
-    try {
-      if (initalHourInput! > endHourInput!) {
-        setIsInitialHourHigherThanEndHour((prevState) => !prevState)
-        return
-      }
-      editCurrentGoal(taskId, data)
-      toggleModalState('editModal')
-    } catch (err) {
-      console.error(err)
+    if (initalHourInput! > endHourInput!) {
+      setIsInitialHourHigherThanEndHour((prevState) => !prevState)
+      return
     }
+    editCurrentGoal(taskId, data)
+    toggleModalState('editModal')
   }
   return (
     <ModalRoot>
