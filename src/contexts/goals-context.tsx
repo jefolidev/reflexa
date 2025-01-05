@@ -33,19 +33,11 @@ interface GoalsContextProps {
   finishedAndExpiredGoals: GoalsProps[]
   highOrderGoals: GoalsProps[]
   setNewGoal: (goals: GoalsProps) => void
-<<<<<<< HEAD
-  findGoalById: (id: string) => void
-  editCurrentGoal: (goalToUse: GoalsProps, data: GoalsProps) => void
-  setGoalAsExpired: () => void
-  setGoalAsFinished: (id: string) => void
-  removeCurrentGoal: (goalToUse: GoalsProps) => void
-=======
   findGoalById: (goalId: string) => GoalsProps
   setGoalAsExpired: () => void
   setGoalAsFinished: (goalId: string) => void
   editCurrentGoal: (goalId: string, data: GoalsProps) => void
   removeCurrentGoal: (goalToRemove: GoalsProps) => void
->>>>>>> update/dashboard-features
 }
 
 export const GoalsContext = createContext({} as GoalsContextProps)
